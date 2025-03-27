@@ -19,11 +19,11 @@ const swaggerOptions = {
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "Student Management System API",
+            title: "Emergency Response System API",
             version: "1.0.0",
-            description: "A student management system API",
+            description: "A emergency response system API",
             contact: {
-                name: "Joanna Marowa",
+                name: "Crisis-Connect",
             },
         },
         servers: [
