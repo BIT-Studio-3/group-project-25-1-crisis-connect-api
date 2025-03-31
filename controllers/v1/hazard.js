@@ -47,3 +47,24 @@ const getHazards = async (req, res) => {
     }
 };
 
+const getHazard = async (req, res) => {
+    try {
+      const hazard = await prisma.hazard.findUnique({
+        where: { id: req.params.id },
+      });
+
+      if (!hazard) {
+        return res.status(404).json({
+          message: `No hazard record with the id: ${req.params.id} found`,
+        });
+      }
+  
+      return res.status(200).json({
+        data: hazard,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        message: err.message,
+      });
+    }
+};
