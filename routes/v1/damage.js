@@ -6,7 +6,7 @@ import {
         getDamage ,
         updateDamage,
         deleteDamage,
-} from "../controllers/v1/damage.js";
+} from "../../controllers/v1/damage.js";
 
 const router = express.Router();
 
