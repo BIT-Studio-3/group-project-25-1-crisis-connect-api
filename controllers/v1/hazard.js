@@ -68,3 +68,39 @@ const getHazard = async (req, res) => {
       });
     }
 };
+
+
+const updateHazard = async (req, res) => {
+    try {
+      let hazard = await prisma.hazard.findUnique({
+        where: { id: req.params.id },
+      });
+  
+      if (!hazard) {
+        return res.status(404).json({
+          message: `No hazard record with the id: ${req.params.id} found`,
+        });
+      }
+  
+      hazard = await prisma.hazard.update({
+        where: { id: req.params.id },
+        data: {
+          streetName: req.body.streetName,
+          streetNumber: req.body.streetNumber,
+          city: req.body.city,
+          region: req.body.region,
+          type: req.body.type,
+        },
+      });
+  
+      return res.status(200).json({
+        message: `Hazard record with the id: ${req.params.id} successfully updated`,
+        data: hazard,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        message: err.message,
+      });
+    }
+};
+
