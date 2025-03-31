@@ -1,6 +1,6 @@
 import prisma from "../../prisma/client.js";
 
-const createDamage = async (req,res) => {
+const recordDamage = async (req,res) => {
     try{
         await prisma.damage.create({
             data: {
@@ -20,8 +20,8 @@ const createDamage = async (req,res) => {
         //send JSON response
 
         return res.status(201).json({
-            message: "Institution successfully created",
-            data: newInstitutions,
+            message: "Damage successfully recorded",
+            data: newDamage,
           });
         } catch (err) {
           return res.status(500).json({
@@ -29,3 +29,24 @@ const createDamage = async (req,res) => {
           });
         }
       };
+
+      const getDamages = async (req, res) => {
+        try {
+          const damage  = await prisma.damage.findMany();
+      
+          // Check if there are no institutions
+          if (!damage) {
+            return res.status(404).json({ message: "No damage record found" });
+          }
+      
+          return res.status(200).json({
+            data: damage,
+          });
+        } catch (err) {
+          return res.status(500).json({
+            message: err.message,
+          });
+        }
+      };
+
+      
