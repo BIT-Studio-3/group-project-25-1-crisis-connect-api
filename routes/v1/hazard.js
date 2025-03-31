@@ -285,3 +285,5 @@ router.put("/:id", updateHazard);
  *                   example: "An unexpected error occurred"
  */
 router.delete("/:id", deleteHazard);
+
+export default router;
