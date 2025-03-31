@@ -27,3 +27,23 @@ const createHazard = async (req, res) => {
       });
     }
 };
+
+const getHazards = async (req, res) => {
+    try {
+      const hazards = await prisma.hazard.findMany();
+  
+      // Check if there are no hazards
+      if (!hazards) {
+        return res.status(404).json({ message: "No hazards record found" });
+      }
+  
+      return res.status(200).json({
+        data: hazards,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        message: err.message,
+      });
+    }
+};
+
