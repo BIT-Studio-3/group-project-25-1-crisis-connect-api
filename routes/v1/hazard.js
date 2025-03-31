@@ -46,3 +46,53 @@ const router = express.Router();
  */
 
 /**
+ * @swagger
+ * /api/v1/hazards:
+ *   post:
+ *     summary: Create a new hazard
+ *     tags:
+ *       - Hazard
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Hazard'
+ *     responses:
+ *       '201':
+ *         description: Hazard successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Hazard successfully recorded"
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Hazard'
+ *       '400':
+ *         description: Invalid input data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Invalid hazard data provided"
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An unexpected error occurred"
+ */
+router.post("/", createHazard);
+
