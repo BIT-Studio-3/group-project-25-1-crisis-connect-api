@@ -104,3 +104,31 @@ const updateHazard = async (req, res) => {
     }
 };
 
+
+const deleteHazard = async (req, res) => {
+    try {
+      const hazard = await prisma.hazard.findUnique({
+        where: { id: req.params.id },
+      });
+  
+      if (!hazard) {
+        return res.status(404).json({
+          message: `No hazard record with the id: ${req.params.id} found`,
+        });
+      }
+  
+      await prisma.hazard.delete({
+        where: { id: req.params.id },
+      });
+  
+      return res.json({
+        message: `Hazard record with the id: ${req.params.id} successfully deleted`,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        message: err.message,
+      });
+    }
+};
+
+
