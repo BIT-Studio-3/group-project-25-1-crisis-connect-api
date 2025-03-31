@@ -49,4 +49,27 @@ const recordDamage = async (req,res) => {
         }
       };
 
+      const getDamage = async (req, res) => {
+        try {
+          const damage  = await prisma.damage.findUnique({
+            where: { id: req.params.id },
+          });
+      
+          // Check if there is no institution
+          if (!damage) {
+            return res.status(404).json({
+              message: `No damage record with the id: ${req.params.id} found`,
+            });
+          }
+      
+          return res.status(200).json({
+            data: damage,
+          });
+        } catch (err) {
+          return res.status(500).json({
+            message: err.message,
+          });
+        }
+      };
+
       
