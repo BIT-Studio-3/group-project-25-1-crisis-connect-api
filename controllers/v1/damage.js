@@ -106,3 +106,29 @@ const updateDamage = async (req, res) => {
       });
     }
   };
+
+  const deleteDamage = async (req, res) => {
+    try {
+      const damage = await prisma.damage.findUnique({
+        where: { id: req.params.id },
+      });
+  
+      if (!damage) {
+        return res.status(404).json({
+          message: `No damage with the id: ${req.params.id} found`,
+        });
+      }
+  
+      await prisma.damage.delete({
+        where: { id: req.params.id },
+      });
+  
+      return res.json({
+        message: `Damage record with the id: ${req.params.id} successfully deleted`,
+      });
+    } catch (err) {
+      return res.status(500).json({
+        message: err.message,
+      });
+    }
+  };
