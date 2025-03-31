@@ -5,6 +5,7 @@ import swaggerUi from "swagger-ui-express";
 
 // Import the index routes module
 import indexRoutes from "./routes/index.js";
+import damageRoutes from "./routes/damage.js"
 
 // Create an Express application
 const app = express();
@@ -36,6 +37,7 @@ const swaggerOptions = {
 };
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use("/", indexRoutes);
+app.use("/v1/damage", damageRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Start the server on port 3000
