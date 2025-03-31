@@ -96,3 +96,45 @@ const router = express.Router();
  */
 router.post("/", createHazard);
 
+/**
+ * @swagger
+ * /api/v1/hazards:
+ *   get:
+ *     summary: Get all hazards
+ *     tags:
+ *       - Hazard
+ *     responses:
+ *       '200':
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Hazard'
+ *       '404':
+ *         description: No hazards found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "No hazards record found"
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An unexpected error occurred"
+ */
+router.get("/", getHazards);
+
