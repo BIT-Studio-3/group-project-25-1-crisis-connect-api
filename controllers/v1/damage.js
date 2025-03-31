@@ -132,3 +132,12 @@ const updateDamage = async (req, res) => {
       });
     }
   };
+
+  export {
+    createInstitution,
+    getInstitutions,
+    getInstitution,
+    updateInstitution,
+    deleteInstitution,
+  };
+  
