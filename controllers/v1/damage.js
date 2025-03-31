@@ -134,10 +134,10 @@ const updateDamage = async (req, res) => {
   };
 
   export {
-    createInstitution,
-    getInstitutions,
-    getInstitution,
-    updateInstitution,
-    deleteInstitution,
+    recordDamage ,
+    getDamages,
+    getDamage ,
+    updateDamage,
+    deleteDamage,
   };
   
