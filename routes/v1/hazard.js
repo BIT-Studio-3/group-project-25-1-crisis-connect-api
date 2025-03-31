@@ -181,3 +181,59 @@ router.get("/", getHazards);
  *                   example: "An unexpected error occurred"
  */
 router.get("/:id", getHazard);
+
+/**
+ * @swagger
+ * /api/v1/hazards/{id}:
+ *   put:
+ *     summary: Update a hazard by id
+ *     tags:
+ *       - Hazard
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The hazard id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Hazard'
+ *     responses:
+ *       '200':
+ *         description: Hazard successfully updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Hazard with the id: {id} successfully updated"
+ *                 data:
+ *                   $ref: '#/components/schemas/Hazard'
+ *       '404':
+ *         description: No hazard found with the provided id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "No hazard record with the id: {id} found"
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An unexpected error occurred"
+ */
+router.put("/:id", updateHazard);
