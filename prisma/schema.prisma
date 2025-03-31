@@ -17,8 +17,8 @@ model hazard {
   id               String @id@default(uuid())
   streetNumber     String 
   streetName       String
-  City             String
-  Region           String
+  city             String
+  region           String
   type             String
   description      String
   createdAt        DateTime     @default(now())
