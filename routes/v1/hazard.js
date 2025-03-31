@@ -237,3 +237,51 @@ router.get("/:id", getHazard);
  *                   example: "An unexpected error occurred"
  */
 router.put("/:id", updateHazard);
+
+/**
+ * @swagger
+ * /api/v1/hazards/{id}:
+ *   delete:
+ *     summary: Delete a hazard by id
+ *     tags:
+ *       - Hazard
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The hazard id
+ *     responses:
+ *       '200':
+ *         description: Hazard successfully deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Hazard with the id: {id} successfully deleted"
+ *       '404':
+ *         description: No hazard found with the provided id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "No hazard record with the id: {id} found"
+ *       '500':
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An unexpected error occurred"
+ */
+router.delete("/:id", deleteHazard);
