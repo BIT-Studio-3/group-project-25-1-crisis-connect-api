@@ -132,3 +132,10 @@ const deleteHazard = async (req, res) => {
 };
 
 
+export {
+    createHazard,
+    getHazards,
+    getHazard,
+    updateHazard,
+    deleteHazard,
+  };
