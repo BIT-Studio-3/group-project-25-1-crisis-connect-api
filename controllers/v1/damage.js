@@ -1,3 +1,7 @@
+/**
+ * @file Manages all  damage methods
+ * @author Joanna Marowa
+ */
 import prisma from "../../prisma/client.js";
 
 const recordDamage = async (req,res) => {
@@ -6,8 +10,8 @@ const recordDamage = async (req,res) => {
             data: {
                 streetNumber:req.body.streetNumber, 
                 streetName:req.body.streetName,   
-                City : req.body.City,           
-                Region  : req.body.Region,       
+                city : req.body.City,           
+                region  : req.body.Region,       
                 type  : req.body.type,       
                 description : req.body.description,      
                      
