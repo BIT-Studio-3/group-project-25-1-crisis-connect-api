@@ -7,7 +7,7 @@ import damageRepository from "../../repositories/damage.js";
 
 const recordDamage = async (req, res) => {
   try {
-    await damagerepository.create({
+    await damagerRepository.create({
       data: {
         streetNumber: req.body.streetNumber,
         streetName: req.body.streetName,
@@ -20,7 +20,7 @@ const recordDamage = async (req, res) => {
     });
 
     // Get all damage from the damage table 
-    const newDamage = await Damagerepository.findMany();
+    const newDamage = await damageRepository.findMany();
 
     //send JSON response
     return res.status(201).json({
@@ -45,7 +45,14 @@ const getDamages = async (req, res) => {
       type: req.body.type|| undefined,
 
     }
-    const damage = await damageRepository.findAll(filters);
+    const sortBy = req.query.sortBy || "id";
+    const sortOrder = req.query.sortOrder === "desc" ? "desc" : "asc";
+
+    const damage = await damageRepository.findAll(filters,
+      sortBy,
+      sortOrder
+    );
+
 
     // Check if there are no institutions
     if (!damage) {
