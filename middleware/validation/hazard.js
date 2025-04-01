@@ -86,3 +86,13 @@ const validatePutHazard = (req, res, next) => {
     }),
   }).min(1); // Ensure at least one field is being updated
 
+  const { error } = hazardSchema.validate(req.body);
+
+  if (error) {
+    return res.status(409).json({
+      message: error.details[0].message,
+    });
+  }
+
+  next();
+};
