@@ -45,6 +45,9 @@ const router = express.Router();
  *         type:
  *           type: string
  *           example: "Fire"
+ *         description:
+ *           type: string
+ *           example: "Severe fire damage"
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -53,13 +56,35 @@ const router = express.Router();
  *           type: string
  *           format: date-time
  *           example: "2024-07-14T12:34:56Z"
+ *
+ *     DamageUpdate:
+ *       type: object
+ *       properties:
+ *         street_name:
+ *           type: string
+ *           example: "Main St"
+ *         street_no:
+ *           type: string
+ *           example: "123"
+ *         city:
+ *           type: string
+ *           example: "New York"
+ *         region:
+ *           type: string
+ *           example: "NY"
+ *         type:
+ *           type: string
+ *           example: "Fire"
+ *         description:
+ *           type: string
+ *           example: "Severe fire damage"
  */
- 
+
 /**
  * @swagger
  * /api/v1/damage:
  *   post:
- *     summary: Create a new damage
+ *     summary: Create a new damage record
  *     tags:
  *       - Damage
  *     requestBody:
@@ -80,42 +105,24 @@ const router = express.Router();
  *                   type: string
  *                   example: "Damage successfully recorded"
  *                 data:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Damage'
+ *                   $ref: '#/components/schemas/Damage'
  *       '400':
  *         description: Invalid input data
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "Invalid damage data provided"
  *       '500':
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "An unexpected error occurred"
  */
-router.post("/",validatePostDamage, recordDamage);
- 
+router.post("/", validatePostDamage, recordDamage);
+
 /**
  * @swagger
  * /api/v1/damage:
  *   get:
- *     summary: Get all damage
+ *     summary: Get all damage records
  *     tags:
  *       - Damage
  *     responses:
  *       '200':
- *         description: Success
+ *         description: A list of damage records
  *         content:
  *           application/json:
  *             schema:
@@ -126,33 +133,17 @@ router.post("/",validatePostDamage, recordDamage);
  *                   items:
  *                     $ref: '#/components/schemas/Damage'
  *       '404':
- *         description: No damage found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "No damage record found"
+ *         description: No damage records found
  *       '500':
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "An unexpected error occurred"
  */
 router.get("/", getDamages);
- 
+
 /**
  * @swagger
  * /api/v1/damage/{id}:
  *   get:
- *     summary: Get a damage by id
+ *     summary: Get a single damage record by ID
  *     tags:
  *       - Damage
  *     parameters:
@@ -161,42 +152,26 @@ router.get("/", getDamages);
  *         required: true
  *         schema:
  *           type: string
- *         description: The damage id
+ *         description: The damage ID
  *     responses:
  *       '200':
- *         description: Success
+ *         description: Successfully retrieved the damage record
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Damage'
  *       '404':
- *         description: No damage found with the provided id
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "No damage record with the id: {id} found"
+ *         description: No damage record found with the given ID
  *       '500':
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "An unexpected error occurred"
  */
 router.get("/:id", getDamage);
- 
+
 /**
  * @swagger
  * /api/v1/damage/{id}:
  *   put:
- *     summary: Update a damage by id
+ *     summary: Update a damage record by ID
  *     tags:
  *       - Damage
  *     parameters:
@@ -205,16 +180,16 @@ router.get("/:id", getDamage);
  *         required: true
  *         schema:
  *           type: string
- *         description: The damage id
+ *         description: The damage ID
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Damage'
+ *             $ref: '#/components/schemas/DamageUpdate'
  *     responses:
  *       '200':
- *         description: Damage successfully updated
+ *         description: Successfully updated the damage record
  *         content:
  *           application/json:
  *             schema:
@@ -222,37 +197,21 @@ router.get("/:id", getDamage);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Damage with the id: {id} successfully updated"
+ *                   example: "Damage with the ID {id} successfully updated"
  *                 data:
  *                   $ref: '#/components/schemas/Damage'
  *       '404':
- *         description: No damage found with the provided id
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "No damage record with the id: {id} found"
+ *         description: No damage record found with the given ID
  *       '500':
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "An unexpected error occurred"
  */
-router.put("/:id", validatePutDamage,updateDamage);
- 
+router.put("/:id", validatePutDamage, updateDamage);
+
 /**
  * @swagger
  * /api/v1/damage/{id}:
  *   delete:
- *     summary: Delete a damage by id
+ *     summary: Delete a damage record by ID
  *     tags:
  *       - Damage
  *     parameters:
@@ -261,10 +220,10 @@ router.put("/:id", validatePutDamage,updateDamage);
  *         required: true
  *         schema:
  *           type: string
- *         description: The damage id
+ *         description: The damage ID
  *     responses:
  *       '200':
- *         description: Damage successfully deleted
+ *         description: Successfully deleted the damage record
  *         content:
  *           application/json:
  *             schema:
@@ -272,35 +231,12 @@ router.put("/:id", validatePutDamage,updateDamage);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Damage with the id: {id} successfully deleted"
+ *                   example: "Damage with the ID {id} successfully deleted"
  *       '404':
- *         description: No damage found with the provided id
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "No damage record with the id: {id} found"
+ *         description: No damage record found with the given ID
  *       '500':
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "An unexpected error occurred"
  */
 router.delete("/:id", deleteDamage);
- 
+
 export default router;
- 
-
-
-
-
-
-
