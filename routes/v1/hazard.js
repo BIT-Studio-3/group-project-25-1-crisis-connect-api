@@ -7,6 +7,11 @@ import {
   deleteHazard,
 } from "../../controllers/v1/hazard.js";
 
+import {
+  validatePostHazard,
+  validatePutHazard,
+} from "../../middleware/validation/hazard.js";
+
 const router = express.Router();
 
 /**
@@ -94,48 +99,86 @@ const router = express.Router();
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
-router.post("/", createHazard);
+router.post("/", validatePostHazard, createHazard);
 
 /**
  * @swagger
- * /api/v1/hazards:
- *   get:
- *     summary: Get all hazards
- *     tags:
- *       - Hazard
- *     responses:
- *       '200':
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 data:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Hazard'
- *       '404':
- *         description: No hazards found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "No hazards record found"
- *       '500':
- *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "An unexpected error occurred"
- */
+* /api/v1/hazards:
+*   get:
+*     summary: Get all hazards
+*     tags:
+*       - Hazard
+*     parameters:
+*       - in: query
+*         name: streetName
+*         schema:
+*           type: string
+*         description: Filter hazards by street name
+*       - in: query
+*         name: streetNumber
+*         schema:
+*           type: string
+*         description: Filter hazards by street number
+*       - in: query
+*         name: city
+*         schema:
+*           type: string
+*         description: Filter hazards by city
+*       - in: query
+*         name: region
+*         schema:
+*           type: string
+*         description: Filter hazards by region
+*       - in: query
+*         name: type
+*         schema:
+*           type: string
+*         description: Filter hazards by type (e.g., Fire, Earthquake, etc.)
+*       - in: query
+*         name: sortBy
+*         schema:
+*           type: string
+*           enum: [id, streetName, streetNumber, city, region, type, createdAt, updatedAt]
+*         description: Field to sort the hazards by (default is 'id')
+*       - in: query
+*         name: sortOrder
+*         schema:
+*           type: string
+*           enum: [asc, desc]
+*         description: Order to sort the hazards by (default is 'asc')
+*     responses:
+*       '200':
+*         description: Success
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 data:
+*                   type: array
+*                   items:
+*                     $ref: '#/components/schemas/Hazard'
+*       '404':
+*         description: No hazards found
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message:
+*                   type: string
+*                   example: "No hazards record found"
+*       '500':
+*         description: Internal server error
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message:
+*                   type: string
+*                   example: "An unexpected error occurred"
+*/
 router.get("/", getHazards);
 
 /**
@@ -236,7 +279,7 @@ router.get("/:id", getHazard);
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
-router.put("/:id", updateHazard);
+router.put("/:id", validatePutHazard, updateHazard);
 
 /**
  * @swagger
