@@ -60,3 +60,9 @@ const validatePutHazard = (req, res, next) => {
       "string.min": "streetName should have a minimum length of {#limit}",
       "string.max": "streetName should have a maximum length of {#limit}",
     }),
+    streetNumber: Joi.string().min(1).max(10).optional().messages({
+      "string.base": "streetNumber should be a string",
+      "string.empty": "streetNumber cannot be empty",
+      "string.min": "streetNumber should have a minimum length of {#limit}",
+      "string.max": "streetNumber should have a maximum length of {#limit}",
+    }),
