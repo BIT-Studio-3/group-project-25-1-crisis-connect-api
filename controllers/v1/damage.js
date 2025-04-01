@@ -43,7 +43,6 @@ const getDamages = async (req, res) => {
       city: req.body.City|| undefined,
       region: req.body.Region|| undefined,
       type: req.body.type|| undefined,
-      description: req.body.description || undefined,
 
     }
     const damage = await damageRepository.findAll(filters);
