@@ -117,12 +117,38 @@ router.post("/", validatePostDamage, recordDamage);
  * @swagger
  * /api/v1/damage:
  *   get:
- *     summary: Get all damage records
+ *     summary: Get all damage records (with optional filters)
  *     tags:
  *       - Damage
+ *     parameters:
+ *       - in: query
+ *         name: streetNumber
+ *         schema:
+ *           type: string
+ *         description: Filter damage records by street number
+ *       - in: query
+ *         name: streetName
+ *         schema:
+ *           type: string
+ *         description: Filter damage records by street name
+ *       - in: query
+ *         name: city
+ *         schema:
+ *           type: string
+ *         description: Filter damage records by city
+ *       - in: query
+ *         name: region
+ *         schema:
+ *           type: string
+ *         description: Filter damage records by region
+ *       - in: query
+ *         name: type
+ *         schema:
+ *           type: string
+ *         description: Filter damage records by type (e.g., Fire, Flood, Earthquake)
  *     responses:
  *       '200':
- *         description: A list of damage records
+ *         description: A list of filtered damage records
  *         content:
  *           application/json:
  *             schema:
@@ -133,7 +159,7 @@ router.post("/", validatePostDamage, recordDamage);
  *                   items:
  *                     $ref: '#/components/schemas/Damage'
  *       '404':
- *         description: No damage records found
+ *         description: No damage records found matching the filters
  *       '500':
  *         description: Internal server error
  */
