@@ -72,3 +72,9 @@ const validatePutHazard = (req, res, next) => {
       "string.min": "city should have a minimum length of {#limit}",
       "string.max": "city should have a maximum length of {#limit}",
     }),
+    region: Joi.string().min(3).max(100).optional().messages({
+      "string.base": "region should be a string",
+      "string.empty": "region cannot be empty",
+      "string.min": "region should have a minimum length of {#limit}",
+      "string.max": "region should have a maximum length of {#limit}",
+    }),
