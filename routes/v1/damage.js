@@ -117,7 +117,7 @@ router.post("/", validatePostDamage, recordDamage);
  * @swagger
  * /api/v1/damage:
  *   get:
- *     summary: Get all damage records (with optional filters)
+ *     summary: Get all damage records (with optional filters and sorting)
  *     tags:
  *       - Damage
  *     parameters:
@@ -146,9 +146,21 @@ router.post("/", validatePostDamage, recordDamage);
  *         schema:
  *           type: string
  *         description: Filter damage records by type (e.g., Fire, Flood, Earthquake)
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *           enum: [id, streetNumber, streetName, city, region, type]
+ *         description: Field to sort the damage records by (default is 'id')
+ *       - in: query
+ *         name: sortOrder
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *         description: Order to sort the damage records by (default is 'asc')
  *     responses:
  *       '200':
- *         description: A list of filtered damage records
+ *         description: A list of filtered and sorted damage records
  *         content:
  *           application/json:
  *             schema:
