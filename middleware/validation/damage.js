@@ -10,11 +10,11 @@ const validatePostDamage = (req, res, next) => {
             "any.required": "streetNumber is required",
         }),
         streetName: Joi.string().min(3).max(100).required().messages({
-            "string.base": " streetName should be a string",
-            "string.empty": " streetName cannot be empty",
+            "string.base": "streetName should be a string",
+            "string.empty": "streetName cannot be empty",
             "string.min": "streetName should have a minimum length of {#limit}",
             "string.max": "streetName should have a maximum length of {#limit}",
-            "any.required": "streetNameis required",
+            "any.required": "streetName is required",
         }),
         city: Joi.string().min(3).max(100).required().messages({
             "string.base": "city should be a string",
@@ -36,58 +36,58 @@ const validatePostDamage = (req, res, next) => {
             "string.min": "type should have a minimum length of {#limit}",
             "string.max": "type should have a maximum length of {#limit}",
             "any.required": "type is required",
-            description: Joi.string().min(3).max(100).required().messages({
-                "string.base": "description should be a string",
-                "string.empty": "description cannot be empty",
-                "string.min": "description should have a minimum length of {#limit}",
-                "string.max": "description should have a maximum length of {#limit}",
-                "any.required": "description is required",
-            }),
+        }),
+        description: Joi.string().min(3).max(100).required().messages({
+            "string.base": "description should be a string",
+            "string.empty": "description cannot be empty",
+            "string.min": "description should have a minimum length of {#limit}",
+            "string.max": "description should have a maximum length of {#limit}",
+            "any.required": "description is required",
+        }),
+    });
+
+    const { error } = damageSchema.validate(req.body);
+
+    if (error) {
+        return res.status(409).json({
+            message: error.details[0].message,
         });
+    }
 
+    next();
+};
 
-        const { error } = damageSchema.validate(req.body);
+const validatePutDamage = (req, res, next) => {
+    const damageSchema = Joi.object({
+        name: Joi.string().min(3).max(100).optional().messages({
+            "string.base": "name should be a string",
+            "string.empty": "name cannot be empty",
+            "string.min": "name should have a minimum length of {#limit}",
+            "string.max": "name should have a maximum length of {#limit}",
+        }),
+        region: Joi.string().min(3).max(100).optional().messages({
+            "string.base": "region should be a string",
+            "string.empty": "region cannot be empty",
+            "string.min": "region should have a minimum length of {#limit}",
+            "string.max": "region should have a maximum length of {#limit}",
+        }),
+        country: Joi.string().min(3).max(100).optional().messages({
+            "string.base": "country should be a string",
+            "string.empty": "country cannot be empty",
+            "string.min": "country should have a minimum length of {#limit}",
+            "string.max": "country should have a maximum length of {#limit}",
+        }),
+    }).min(1); // Ensure at least one field is being updated
 
-        if(error) {
-            return res.status(409).json({
-                message: error.details[0].message,
-            });
-        }
+    const { error } = damageSchema.validate(req.body);
 
-  next();
-    };
+    if (error) {
+        return res.status(409).json({
+            message: error.details[0].message,
+        });
+    }
 
-    const validatePutDamage = (req, res, next) => {
-        const damageSchema = Joi.object({
-            name: Joi.string().min(3).max(100).optional().messages({
-                "string.base": "name should be a string",
-                "string.empty": "name cannot be empty",
-                "string.min": "name should have a minimum length of {#limit}",
-                "string.max": "name should have a maximum length of {#limit}",
-            }),
-            region: Joi.string().min(3).max(100).optional().messages({
-                "string.base": "region should be a string",
-                "string.empty": "region cannot be empty",
-                "string.min": "region should have a minimum length of {#limit}",
-                "string.max": "region should have a maximum length of {#limit}",
-            }),
-            country: Joi.string().min(3).max(100).optional().messages({
-                "string.base": "country should be a string",
-                "string.empty": "country cannot be empty",
-                "string.min": "country should have a minimum length of {#limit}",
-                "string.max": "country should have a maximum length of {#limit}",
-            }),
-        }).min(1); // Ensure at least one field is being updated
+    next();
+};
 
-        const { error } = damageSchema.validate(req.body);
-
-        if (error) {
-            return res.status(409).json({
-                message: error.details[0].message,
-            });
-        }
-
-        next();
-    };
-
-    export { validatePostDamage, validatePutDamage };
+export { validatePostDamage, validatePutDamage };
