@@ -40,3 +40,14 @@ const validatePostHazard = (req, res, next) => {
     }),
   });
 
+  const { error } = hazardSchema.validate(req.body);
+
+  if (error) {
+    return res.status(409).json({
+      message: error.details[0].message,
+    });
+  }
+
+  next();
+};
+
