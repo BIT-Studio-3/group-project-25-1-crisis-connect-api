@@ -96,3 +96,5 @@ const validatePutHazard = (req, res, next) => {
 
   next();
 };
+
+export { validatePostHazard, validatePutHazard };
