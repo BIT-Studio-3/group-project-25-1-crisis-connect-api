@@ -78,3 +78,11 @@ const validatePutHazard = (req, res, next) => {
       "string.min": "region should have a minimum length of {#limit}",
       "string.max": "region should have a maximum length of {#limit}",
     }),
+    type: Joi.string().min(3).max(100).optional().messages({
+      "string.base": "type should be a string",
+      "string.empty": "type cannot be empty",
+      "string.min": "type should have a minimum length of {#limit}",
+      "string.max": "type should have a maximum length of {#limit}",
+    }),
+  }).min(1); // Ensure at least one field is being updated
+
