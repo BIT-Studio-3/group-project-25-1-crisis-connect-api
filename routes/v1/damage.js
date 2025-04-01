@@ -12,6 +12,10 @@ import {
         deleteDamage,
 } from "../../controllers/v1/damage.js";
 
+import {
+        validatePostDamage,
+        validatePutDamage,
+      } from "../../middleware/validation/damage.js";
 const router = express.Router();
 
  
@@ -100,7 +104,7 @@ const router = express.Router();
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
-router.post("/", recordDamage);
+router.post("/",validatePostDamage, recordDamage);
  
 /**
  * @swagger
@@ -242,7 +246,7 @@ router.get("/:id", getDamage);
  *                   type: string
  *                   example: "An unexpected error occurred"
  */
-router.put("/:id", updateDamage);
+router.put("/:id", validatePutDamage,updateDamage);
  
 /**
  * @swagger
