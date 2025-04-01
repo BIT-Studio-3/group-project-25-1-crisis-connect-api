@@ -17,3 +17,10 @@ const validatePostHazard = (req, res, next) => {
       "string.max": "streetNumber should have a maximum length of {#limit}",
       "any.required": "streetNumber is required",
     }),
+    city: Joi.string().min(3).max(100).required().messages({
+      "string.base": "city should be a string",
+      "string.empty": "city cannot be empty",
+      "string.min": "city should have a minimum length of {#limit}",
+      "string.max": "city should have a maximum length of {#limit}",
+      "any.required": "city is required",
+    }),
