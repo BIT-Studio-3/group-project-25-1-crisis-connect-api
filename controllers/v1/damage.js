@@ -36,7 +36,17 @@ const recordDamage = async (req, res) => {
 
 const getDamages = async (req, res) => {
   try {
-    const damage = await damageRepository.findMany();
+    // Extract filters from the query parameters
+    const filters ={
+      streetNumber: req.body.streetNumber|| undefined,
+      streetName: req.body.streetName || undefined,
+      city: req.body.City|| undefined,
+      region: req.body.Region|| undefined,
+      type: req.body.type|| undefined,
+      description: req.body.description || undefined,
+
+    }
+    const damage = await damageRepository.findAll(filters);
 
     // Check if there are no institutions
     if (!damage) {
