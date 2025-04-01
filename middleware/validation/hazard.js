@@ -31,3 +31,12 @@ const validatePostHazard = (req, res, next) => {
       "string.max": "region should have a maximum length of {#limit}",
       "any.required": "region is required",
     }),
+    type: Joi.string().min(3).max(100).required().messages({
+      "string.base": "type should be a string",
+      "string.empty": "type cannot be empty",
+      "string.min": "type should have a minimum length of {#limit}",
+      "string.max": "type should have a maximum length of {#limit}",
+      "any.required": "type is required",
+    }),
+  });
+
