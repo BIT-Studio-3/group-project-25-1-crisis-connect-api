@@ -51,3 +51,12 @@ const validatePostHazard = (req, res, next) => {
   next();
 };
 
+// Validation for updating an existing hazard
+const validatePutHazard = (req, res, next) => {
+  const hazardSchema = Joi.object({
+    streetName: Joi.string().min(3).max(100).optional().messages({
+      "string.base": "streetName should be a string",
+      "string.empty": "streetName cannot be empty",
+      "string.min": "streetName should have a minimum length of {#limit}",
+      "string.max": "streetName should have a maximum length of {#limit}",
+    }),
