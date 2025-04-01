@@ -5,8 +5,23 @@ class HazardRepository {
     return await prisma.hazard.create({ data });
   }
 
-  async findAll() {
-    return await prisma.hazard.findMany();
+  async findAll(filters = {}, sortBy = 'id', sortOrder = 'asc') {
+    const query = {
+      orderBy: {
+        [sortBy]: sortOrder, // Sort by the specified column and order
+      },
+    };
+
+    if (Object.keys(filters).length > 0) {
+      query.where = {};
+      for (const [key, value] of Object.entries(filters)) {
+        if (value) {
+          query.where[key] = { contains: value };
+        }
+      }
+    }
+
+    return await prisma.hazard.findMany(query);
   }
 
   async findById(id) {
