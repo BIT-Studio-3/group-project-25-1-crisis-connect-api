@@ -38,7 +38,7 @@ const swaggerOptions = {
 };
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use("/", indexRoutes);
-app.use("/v1/damage", damageRoutes);
+app.use("/api/v1/damage", damageRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use(isContentTypeApplicationJSON);
 
