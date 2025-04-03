@@ -1,5 +1,5 @@
 /**
- * @file Manages all  hazard methods
+ * @file Manages all the hazard routes
  * @author Mustafa Habibullah
  */
 
@@ -58,9 +58,9 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/v1/hazards:
+ * /api/v1/hazard:
  *   post:
- *     summary: Create a new hazard
+ *     summary: Create a new hazard record
  *     tags:
  *       - Hazard
  *     requestBody:
@@ -81,117 +81,83 @@ const router = express.Router();
  *                   type: string
  *                   example: "Hazard successfully recorded"
  *                 data:
- *                   type: array
- *                   items:
- *                     $ref: '#/components/schemas/Hazard'
+ *                   $ref: '#/components/schemas/Hazard'
  *       '400':
  *         description: Invalid input data
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "Invalid hazard data provided"
  *       '500':
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "An unexpected error occurred"
  */
 router.post("/", validatePostHazard, createHazard);
 
 /**
  * @swagger
-* /api/v1/hazards:
-*   get:
-*     summary: Get all hazards
-*     tags:
-*       - Hazard
-*     parameters:
-*       - in: query
-*         name: streetName
-*         schema:
-*           type: string
-*         description: Filter hazards by street name
-*       - in: query
-*         name: streetNumber
-*         schema:
-*           type: string
-*         description: Filter hazards by street number
-*       - in: query
-*         name: city
-*         schema:
-*           type: string
-*         description: Filter hazards by city
-*       - in: query
-*         name: region
-*         schema:
-*           type: string
-*         description: Filter hazards by region
-*       - in: query
-*         name: type
-*         schema:
-*           type: string
-*         description: Filter hazards by type (e.g., Fire, Earthquake, etc.)
-*       - in: query
-*         name: sortBy
-*         schema:
-*           type: string
-*           enum: [id, streetName, streetNumber, city, region, type, createdAt, updatedAt]
-*         description: Field to sort the hazards by (default is 'id')
-*       - in: query
-*         name: sortOrder
-*         schema:
-*           type: string
-*           enum: [asc, desc]
-*         description: Order to sort the hazards by (default is 'asc')
-*     responses:
-*       '200':
-*         description: Success
-*         content:
-*           application/json:
-*             schema:
-*               type: object
-*               properties:
-*                 data:
-*                   type: array
-*                   items:
-*                     $ref: '#/components/schemas/Hazard'
-*       '404':
-*         description: No hazards found
-*         content:
-*           application/json:
-*             schema:
-*               type: object
-*               properties:
-*                 message:
-*                   type: string
-*                   example: "No hazards record found"
-*       '500':
-*         description: Internal server error
-*         content:
-*           application/json:
-*             schema:
-*               type: object
-*               properties:
-*                 message:
-*                   type: string
-*                   example: "An unexpected error occurred"
-*/
+ * /api/v1/hazard:
+ *   get:
+ *     summary: Get all hazard records (with optional filters and sorting)
+ *     tags:
+ *       - Hazard
+ *     parameters:
+ *       - in: query
+ *         name: streetNumber
+ *         schema:
+ *           type: string
+ *         description: Filter hazard records by street number
+ *       - in: query
+ *         name: streetName
+ *         schema:
+ *           type: string
+ *         description: Filter hazard records by street name
+ *       - in: query
+ *         name: city
+ *         schema:
+ *           type: string
+ *         description: Filter hazard records by city
+ *       - in: query
+ *         name: region
+ *         schema:
+ *           type: string
+ *         description: Filter hazard records by region
+ *       - in: query
+ *         name: type
+ *         schema:
+ *           type: string
+ *         description: Filter hazard records by type (e.g., Fire, Flood, Earthquake)
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *           enum: [id, streetNumber, streetName, city, region, type]
+ *         description: Field to sort the hazard records by (default is 'id')
+ *       - in: query
+ *         name: sortOrder
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *         description: Order to sort the hazard records by (default is 'asc')
+ *     responses:
+ *       '200':
+ *         description: A list of filtered and sorted hazard records
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Hazard'
+ *       '404':
+ *         description: No hazard records found matching the filters
+ *       '500':
+ *         description: Internal server error
+ */
 router.get("/", getHazards);
 
 /**
  * @swagger
- * /api/v1/hazards/{id}:
+ * /api/v1/hazard/{id}:
  *   get:
- *     summary: Get a hazard by id
+ *     summary: Get a single hazard record by ID
  *     tags:
  *       - Hazard
  *     parameters:
@@ -200,42 +166,26 @@ router.get("/", getHazards);
  *         required: true
  *         schema:
  *           type: string
- *         description: The hazard id
+ *         description: The hazard ID
  *     responses:
  *       '200':
- *         description: Success
+ *         description: Successfully retrieved the hazard record
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Hazard'
  *       '404':
- *         description: No hazard found with the provided id
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "No hazard record with the id: {id} found"
+ *         description: No hazard record found with the given ID
  *       '500':
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "An unexpected error occurred"
  */
 router.get("/:id", getHazard);
 
 /**
  * @swagger
- * /api/v1/hazards/{id}:
+ * /api/v1/hazard/{id}:
  *   put:
- *     summary: Update a hazard by id
+ *     summary: Update a hazard record by ID
  *     tags:
  *       - Hazard
  *     parameters:
@@ -244,7 +194,7 @@ router.get("/:id", getHazard);
  *         required: true
  *         schema:
  *           type: string
- *         description: The hazard id
+ *         description: The hazard ID
  *     requestBody:
  *       required: true
  *       content:
@@ -253,7 +203,7 @@ router.get("/:id", getHazard);
  *             $ref: '#/components/schemas/Hazard'
  *     responses:
  *       '200':
- *         description: Hazard successfully updated
+ *         description: Successfully updated the hazard record
  *         content:
  *           application/json:
  *             schema:
@@ -261,37 +211,21 @@ router.get("/:id", getHazard);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Hazard with the id: {id} successfully updated"
+ *                   example: "Hazard with the ID {id} successfully updated"
  *                 data:
  *                   $ref: '#/components/schemas/Hazard'
  *       '404':
- *         description: No hazard found with the provided id
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "No hazard record with the id: {id} found"
+ *         description: No hazard record found with the given ID
  *       '500':
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "An unexpected error occurred"
  */
 router.put("/:id", validatePutHazard, updateHazard);
 
 /**
  * @swagger
- * /api/v1/hazards/{id}:
+ * /api/v1/hazard/{id}:
  *   delete:
- *     summary: Delete a hazard by id
+ *     summary: Delete a hazard record by ID
  *     tags:
  *       - Hazard
  *     parameters:
@@ -300,10 +234,10 @@ router.put("/:id", validatePutHazard, updateHazard);
  *         required: true
  *         schema:
  *           type: string
- *         description: The hazard id
+ *         description: The ID of the hazard record to delete
  *     responses:
  *       '200':
- *         description: Hazard successfully deleted
+ *         description: Successfully deleted the hazard record
  *         content:
  *           application/json:
  *             schema:
@@ -311,27 +245,11 @@ router.put("/:id", validatePutHazard, updateHazard);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Hazard with the id: {id} successfully deleted"
+ *                   example: "Hazard with the ID {id} successfully deleted"
  *       '404':
- *         description: No hazard found with the provided id
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "No hazard record with the id: {id} found"
+ *         description: No hazard record found with the given ID
  *       '500':
  *         description: Internal server error
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   example: "An unexpected error occurred"
  */
 router.delete("/:id", deleteHazard);
 
