@@ -1,4 +1,10 @@
+/**
+ * @file Manages all  hazard methods
+ * @author Mustafa Habibullah
+ */
+
 import express from "express";
+
 import {
   createHazard,
   getHazards,
