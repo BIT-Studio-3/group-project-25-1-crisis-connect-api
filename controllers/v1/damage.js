@@ -7,20 +7,17 @@ import damageRepository from "../../repositories/damage.js";
 
 const recordDamage = async (req, res) => {
   try {
-    await damagerRepository.create({
-      data: {
-        streetNumber: req.body.streetNumber,
-        streetName: req.body.streetName,
-        city: req.body.City,
-        region: req.body.Region,
-        type: req.body.type,
-        description: req.body.description,
-
-      }
+    await damageRepository.create({
+      streetNumber: req.body.streetNumber,
+      streetName: req.body.streetName,
+      city: req.body.city,
+      region: req.body.region,
+      type: req.body.type,
+      description: req.body.description,
     });
 
-    // Get all damage from the damage table 
-    const newDamage = await damageRepository.findMany();
+    // Get all damage from the damage table
+    const newDamage = await damageRepository.findAll();
 
     //send JSON response
     return res.status(201).json({
@@ -37,22 +34,17 @@ const recordDamage = async (req, res) => {
 const getDamages = async (req, res) => {
   try {
     // Extract filters from the query parameters
-    const filters ={
-      streetNumber: req.body.streetNumber|| undefined,
-      streetName: req.body.streetName || undefined,
-      city: req.body.City|| undefined,
-      region: req.body.Region|| undefined,
-      type: req.body.type|| undefined,
-
-    }
+    const filters = {
+      streetNumber: req.query.streetNumber || undefined,
+      streetName: req.query.streetName || undefined,
+      city: req.query.city || undefined,
+      region: req.query.region || undefined,
+      type: req.query.type || undefined,
+    };
     const sortBy = req.query.sortBy || "id";
     const sortOrder = req.query.sortOrder === "desc" ? "desc" : "asc";
 
-    const damage = await damageRepository.findAll(filters,
-      sortBy,
-      sortOrder
-    );
-
+    const damage = await damageRepository.findAll(filters, sortBy, sortOrder);
 
     // Check if there are no institutions
     if (!damage) {
@@ -71,10 +63,8 @@ const getDamages = async (req, res) => {
 
 const getDamage = async (req, res) => {
   try {
-    const damage = await damageRepository.findUnique({
-      where: { id: req.params.id },
-    });
-
+    const damage = await damageRepository.findById(req.params.id);
+console.log()
     // Check if there is no institution
     if (!damage) {
       return res.status(404).json({
@@ -95,9 +85,7 @@ const getDamage = async (req, res) => {
 const updateDamage = async (req, res) => {
   try {
     // Find the institution by id
-    let damage = await damageRepository.findUnique({
-      where: { id: req.params.id },
-    });
+    let damage = await damageRepository.findById(req.params.id);
 
     // Check if there is no institution
     if (!damage) {
@@ -107,18 +95,15 @@ const updateDamage = async (req, res) => {
     }
 
     // Update the institution
-    damage = await damageRepository.update({
-      where: { id: req.params.id },
-      data: {
-        // Data to be updated     
-        type: req.body.type,
-        description: req.body.description,
-      },
+    damage = await damageRepository.update(req.params.id, {
+      // Data to be updated
+      type: req.body.type,
+      description: req.body.description,
     });
 
     return res.status(200).json({
       message: `Damage record with the id: ${req.params.id} successfully updated`,
-      data: institution,
+      data: damage,
     });
   } catch (err) {
     return res.status(500).json({
@@ -129,9 +114,7 @@ const updateDamage = async (req, res) => {
 
 const deleteDamage = async (req, res) => {
   try {
-    const damage = await damageRepository.findUnique({
-      where: { id: req.params.id },
-    });
+    const damage = await damageRepository.findById(req.params.id);
 
     if (!damage) {
       return res.status(404).json({
@@ -139,9 +122,7 @@ const deleteDamage = async (req, res) => {
       });
     }
 
-    await damageRepository.delete({
-      where: { id: req.params.id },
-    });
+    await damageRepository.delete(req.params.id);
 
     return res.json({
       message: `Damage record with the id: ${req.params.id} successfully deleted`,
@@ -153,10 +134,4 @@ const deleteDamage = async (req, res) => {
   }
 };
 
-export {
-  recordDamage,
-  getDamages,
-  getDamage,
-  updateDamage,
-  deleteDamage,
-};
+export { recordDamage, getDamages, getDamage, updateDamage, deleteDamage };
