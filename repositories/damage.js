@@ -5,7 +5,7 @@ class DamageRepository {
     return await prisma.damage.create({ data });
   }
 
-  async findAll(filters={}, sortBy = "", sortOrder = "") {
+  async findAll(filters={}, sortBy = "id", sortOrder = "asc") {
     const query = {
       orderBy: {
         [sortBy]: sortOrder, // Sort by the specified column and order
@@ -17,7 +17,7 @@ class DamageRepository {
       // Loop through the filters and apply them dynamically
       for (const [key, value] of Object.entries(filters)) {
         if (value) {
-          query.where[key] = { contains: value };
+          query.where[key] = { contains: value, mode: "insensitive" };
         }
       }
     }
