@@ -30,10 +30,10 @@ const router = express.Router();
  *           type: string
  *           format: uuid
  *           example: "123e4567-e89b-12d3-a456-426614174000"
- *         street_name:
+ *         streetName:
  *           type: string
  *           example: "Main St"
- *         street_no:
+ *         streetNumber:
  *           type: string
  *           example: "123"
  *         city:
@@ -60,10 +60,10 @@ const router = express.Router();
  *     DamageUpdate:
  *       type: object
  *       properties:
- *         street_name:
+ *         streetName:
  *           type: string
  *           example: "Main St"
- *         street_no:
+ *         streetNumber:
  *           type: string
  *           example: "123"
  *         city:
@@ -258,7 +258,7 @@ router.put("/:id", validatePutDamage, updateDamage);
  *         required: true
  *         schema:
  *           type: string
- *         description: The damage ID
+ *         description: The ID of the damage record to delete
  *     responses:
  *       '200':
  *         description: Successfully deleted the damage record
@@ -275,6 +275,8 @@ router.put("/:id", validatePutDamage, updateDamage);
  *       '500':
  *         description: Internal server error
  */
+
 router.delete("/:id", deleteDamage);
 
 export default router;
+
