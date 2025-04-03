@@ -10,7 +10,7 @@ const validatePostHazard = (req, res, next) => {
       "string.max": "streetName should have a maximum length of {#limit}",
       "any.required": "streetName is required",
     }),
-    streetNumber: Joi.string().min(1).max(10).required().messages({
+    streetNumber: Joi.string().min(1).max(100).required().messages({
       "string.base": "streetNumber should be a string",
       "string.empty": "streetNumber cannot be empty",
       "string.min": "streetNumber should have a minimum length of {#limit}",
@@ -24,7 +24,7 @@ const validatePostHazard = (req, res, next) => {
       "string.max": "city should have a maximum length of {#limit}",
       "any.required": "city is required",
     }),
-    region: Joi.string().min(3).max(100).required().messages({
+    region: Joi.string().min(1).max(100).required().messages({
       "string.base": "region should be a string",
       "string.empty": "region cannot be empty",
       "string.min": "region should have a minimum length of {#limit}",
@@ -37,6 +37,13 @@ const validatePostHazard = (req, res, next) => {
       "string.min": "type should have a minimum length of {#limit}",
       "string.max": "type should have a maximum length of {#limit}",
       "any.required": "type is required",
+    }),
+    description: Joi.string().min(3).max(100).required().messages({
+      "string.base": "description should be a string",
+      "string.empty": "description cannot be empty",
+      "string.min": "description should have a minimum length of {#limit}",
+      "string.max": "description should have a maximum length of {#limit}",
+      "any.required": "description is required",
     }),
   });
 
@@ -83,6 +90,12 @@ const validatePutHazard = (req, res, next) => {
       "string.empty": "type cannot be empty",
       "string.min": "type should have a minimum length of {#limit}",
       "string.max": "type should have a maximum length of {#limit}",
+    }),
+    description: Joi.string().min(3).max(100).optional().messages({
+      "string.base": "description should be a string",
+      "string.empty": "description cannot be empty",
+      "string.min": "description should have a minimum length of {#limit}",
+      "string.max": "description should have a maximum length of {#limit}",
     }),
   }).min(1); // Ensure at least one field is being updated
 
