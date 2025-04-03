@@ -8,6 +8,7 @@
     "dev": "nodemon app.js",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:reset": "npx prisma migrate reset --force",
+    "prisma:seed-damages": "node ../prisma/seeding/seed-damage.js && node ../prisma/seeding/seed-damage-github.js",
     "prisma:seed-institutions": "node ./prisma/seeding/seed-institutions-github.js"
   },
   "type": "module",
@@ -28,5 +29,8 @@
     "mocha": "^11.1.0",
     "nodemon": "^3.1.9",
     "prisma": "^6.5.0"
+  },
+  "directories": {
+    "test": "test"
   }
 }

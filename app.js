@@ -4,9 +4,11 @@ import swaggerUi from "swagger-ui-express";
  
 // Import the index routes module
 import indexRoutes from "./routes/index.js";
+
+import damageRoutes from "./routes/v1/damage.js";
 import hazardRoutes from "./routes/v1/hazard.js";
 import { isContentTypeApplicationJSON } from "./middleware/utils.js";
- 
+
 // Create an Express application
 const app = express();
  
@@ -38,6 +40,7 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use(isContentTypeApplicationJSON);
 app.use("/", indexRoutes);
+app.use("/api/v1/damage", damageRoutes);
 app.use("/api/v1/hazard", hazardRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  
