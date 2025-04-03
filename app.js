@@ -37,10 +37,10 @@ const swaggerOptions = {
     apis: ["./routes/v1/*.js"],
 };
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
+app.use(isContentTypeApplicationJSON);
 app.use("/", indexRoutes);
 app.use("/api/v1/damage", damageRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-app.use(isContentTypeApplicationJSON);
 
 // Start the server on port 3000
 app.listen(PORT, () => {
