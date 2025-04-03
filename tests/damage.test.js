@@ -11,34 +11,32 @@ export let anotherDamageId; // Exported for use in other test files
 
 describe("Damages", () => {
   it("should reject non-string streetNumber", async () => {
-    const res = await chai
-      .request(app)
-      .post("/api/v1/damage")
-      .send({
-        streetNumber: 123,
-        streetName: "Main St",
-        City: "Springfield",
-        Region: "Midwest",
-        type: "Fire",
-        description: "A large fire broke out in a commercial building."
-      });
+    const res = await chai.request(app).post("/api/v1/damage").send({
+      streetName: "Main St",
+      streetNumber: 123,
+      city: "New York",
+      region: "NY",
+      type: "Fire",
+      description: "Severe fire damage",
+    });
 
-    chai.expect(res.body.message).to.be.equal("streetNumber should be a string");
+    chai
+      .expect(res.body.message)
+      .to.be.equal("streetNumber should be a string");
   });
 
   it("should create a valid damage record", async () => {
     const res = await chai.request(app).post("/api/v1/damage").send({
       streetNumber: "123",
       streetName: "Main St",
-      City: "Springfield",
-      Region: "Midwest",
+      city: "Springfield",
+      region: "Midwest",
       type: "Fire",
-      description: "A large fire broke out in a commercial building."
+      description: "A large fire broke out in a commercial building.",
     });
-
     chai
       .expect(res.body.message)
-      .to.be.equal("Damage record successfully created");
+      .to.be.equal("Damage successfully recorded");
     damageId = res.body.data[0].id;
   });
 
@@ -46,15 +44,15 @@ describe("Damages", () => {
     const res = await chai.request(app).post("/api/v1/damage").send({
       streetNumber: "456",
       streetName: "Oak St",
-      City: "Shelbyville",
-      Region: "South",
+      city: "Shelbyville",
+      region: "South",
       type: "Flood",
       description: "Flooding caused significant damage to several homes."
     });
 
     chai
       .expect(res.body.message)
-      .to.be.equal("Damage record successfully created");
+      .to.be.equal("Damage successfully recorded");
     anotherDamageId = res.body.data[0].id;
   });
 
@@ -68,8 +66,7 @@ describe("Damages", () => {
     const res = await chai
       .request(app)
       .get(`/api/v1/damage/${damageId}`);
-
-    chai.expect(res.body.data.streetName).to.be.equal("Main St");
+    chai.expect(res.body.data.id).to.be.equal(damageId);
   });
 
   it("should filter damage records by streetName", async () => {
@@ -85,8 +82,8 @@ describe("Damages", () => {
       .send({
         streetNumber: "123",
         streetName: "Main St",
-        City: "Springfield",
-        Region: "Midwest",
+        city: "Springfield",
+        region: "Midwest",
         type: 123,
         description: "A large fire broke out in a commercial building."
       });
@@ -101,8 +98,8 @@ describe("Damages", () => {
       .send({
         streetNumber: "123",
         streetName: "Main St",
-        City: "Springfield",
-        Region: "Midwest",
+        city: "Springfield",
+        region: "Midwest",
         type: "Earthquake",
         description: "An earthquake caused significant damage."
       });
@@ -118,7 +115,7 @@ describe("Damages", () => {
     const res = await chai
       .request(app)
       .delete(`/api/v1/damage/${damageId}`);
-
+       
     chai
       .expect(res.body.message)
       .to.be.equal(
