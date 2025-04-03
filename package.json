@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run prisma:reset && mocha tests --recursive --timeout 10000 --exit",
     "dev": "nodemon app.js",
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:reset": "npx prisma migrate reset --force",
-    "prisma:seed-damages": "node ../prisma/seeding/seed-damage.js && node ../prisma/seeding/seed-damage-github.js",
-    "test": "npm run prisma:reset && mocha tests --recursive --timeout 10000 --exit"
+    "prisma:seed-damages": "node ../prisma/seeding/seed-damage.js && node ../prisma/seeding/seed-damage-github.js"
   },
   "type": "module",
   "keywords": [],
