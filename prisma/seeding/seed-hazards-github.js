@@ -18,7 +18,8 @@ const validateHazard = (hazard) => {
 
 const seedHazardsFromGitHub = async () => {
   try {
-    const gistUrl = "https://gist.githubusercontent.com/Mustafa12315/6f082a88a0d17d6443106ac06997c49f/raw/910fe620a57f852ac9853348829909bcca5c43f4/hazards.json"; // Replace <GIST_RAW_URL> with the raw URL of your GitHub Gist
+    const gistUrl = 
+    "https://gist.githubusercontent.com/Mustafa12315/6f082a88a0d17d6443106ac06997c49f/raw/910fe620a57f852ac9853348829909bcca5c43f4/hazards.json"; 
     const response = await fetch(gistUrl);
     const hazardData = await response.json();
 
@@ -40,4 +41,4 @@ const seedHazardsFromGitHub = async () => {
   }
 };
 
-seedHazardsFromGitHub();
+export default seedHazardsFromGitHub();
