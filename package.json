@@ -9,7 +9,7 @@
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:reset": "npx prisma migrate reset --force",
     "prisma:seed-damages": "node ../prisma/seeding/seed-damage.js && node ../prisma/seeding/seed-damage-github.js",
-    "prisma:seed-institutions": "node ./prisma/seeding/seed-institutions-github.js"
+    "prisma:seed-hazards": "node ./prisma/seeding/seed-hazards.js && node ../prisma/seeding/seed-damage-github.js" 
   },
   "type": "module",
   "keywords": [],
