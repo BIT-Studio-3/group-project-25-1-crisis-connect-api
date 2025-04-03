@@ -38,7 +38,7 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use(isContentTypeApplicationJSON);
 app.use("/", indexRoutes);
-app.use("/routes/hazard", hazardRoutes);
+app.use("/api/v1/hazard", hazardRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  
 // Start the server on port 3000
