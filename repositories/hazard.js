@@ -20,7 +20,6 @@ class HazardRepository {
         }
       }
     }
-
     return await prisma.hazard.findMany(query);
   }
 
