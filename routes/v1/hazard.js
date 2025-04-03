@@ -21,40 +21,54 @@ import {
 const router = express.Router();
 
 /**
- * @swagger
- * components:
- *   schemas:
- *     Hazard:
- *       type: object
- *       properties:
- *         id:
- *           type: string
- *           format: uuid
- *           example: "123e4567-e89b-12d3-a456-426614174000"
- *         streetName:
- *           type: string
- *           example: "Main St"
- *         streetNumber:
- *           type: string
- *           example: "123"
- *         city:
- *           type: string
- *           example: "New York"
- *         region:
- *           type: string
- *           example: "NY"
- *         type:
- *           type: string
- *           example: "Fire"
- *         createdAt:
- *           type: string
- *           format: date-time
- *           example: "2024-07-14T12:34:56Z"
- *         updatedAt:
- *           type: string
- *           format: date-time
- *           example: "2024-07-14T12:34:56Z"
- */
+* @swagger
+* components:
+*   schemas:
+*     Hazard:
+*       type: object
+*       description: "Represents a hazard event with its details such as location, type, and timestamps of creation and update."
+*       properties:
+*         id:
+*           type: string
+*           format: uuid
+*           example: "123e4567-e89b-12d3-a456-426614174000"
+*           description: "Unique identifier for the hazard event."
+*         streetName:
+*           type: string
+*           example: "Main St"
+*           description: "The name of the street where the hazard is located."
+*         streetNumber:
+*           type: string
+*           example: "123"
+*           description: "The street number of the address of the hazard."
+*         city:
+*           type: string
+*           example: "New York"
+*           description: "The city where the hazard is located."
+*         region:
+*           type: string
+*           example: "NY"
+*           description: "The region or state where the hazard is located."
+*         type:
+*           type: string
+*           example: "Fire"
+*           description: "The type of hazard event (e.g., Fire, Flood, Earthquake)."
+*         description:
+*           type: string
+*           example: "A large fire has broken out in the city center."
+*           description: "A detailed description of the hazard event, providing more information about its nature or impact."
+*         createdAt:
+*           type: string
+*           format: date-time
+*           example: "2024-07-14T12:34:56Z"
+*           description: "Timestamp when the hazard event was created."
+*         updatedAt:
+*           type: string
+*           format: date-time
+*           example: "2024-07-14T12:34:56Z"
+*           description: "Timestamp when the hazard event was last updated."
+*/
+
 
 /**
  * @swagger
