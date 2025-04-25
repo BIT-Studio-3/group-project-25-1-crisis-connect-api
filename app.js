@@ -39,13 +39,13 @@ const swaggerOptions = {
             },
         ],
     },
-    apis: ["./routes/v1/*.js"],
+    apis: ["./routes/*.js"],
 };
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use("/", indexRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/institutions", jwtAuth, institutionRoutes); // Authenticated route
+app.use("/api/auth", authRoutes);
+app.use("/api/institutions", jwtAuth, institutionRoutes); // Authenticated route
 // Start the server on port 3000
 app.listen(PORT, () => {
   console.log(
