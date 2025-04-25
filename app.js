@@ -7,7 +7,7 @@ import logger from "./middleware/logger.js";
 import indexRoutes from "./routes/index.js";
 import jwtAuth from "./middleware/jwtauth.js";
 
-import authRoutes from "./routes/v1/auth.js";
+import authRoutes from "./routes/auth.js";
 
 // Create an Express application
 const app = express();
