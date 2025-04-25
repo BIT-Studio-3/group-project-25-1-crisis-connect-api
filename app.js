@@ -5,6 +5,9 @@ import swaggerUi from "swagger-ui-express";
 import logger from "./middleware/logger.js";
 // Import the index routes module
 import indexRoutes from "./routes/index.js";
+import jwtAuth from "./middleware/jwtauth.js";
+
+import authRoutes from "./routes/v1/auth.js";
 
 // Create an Express application
 const app = express();
