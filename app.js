@@ -2,7 +2,7 @@
 import express from "express";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-
+import logger from "./middleware/logger.js";
 // Import the index routes module
 import indexRoutes from "./routes/index.js";
 
@@ -12,6 +12,10 @@ const app = express();
 // Use the PORT environment variable or 3000
 const PORT = process.env.PORT || 3000;
 
+app.use((req, res, next) => {
+    logger.info(`${req.method} ${req.originalUrl}`);
+    next();
+  });
 // Use the routes module
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
