@@ -1,6 +1,7 @@
 import express from "express";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import helmet from "helmet";
  
 // Import the index routes module
 import indexRoutes from "./routes/index.js";
@@ -39,6 +40,11 @@ const swaggerOptions = {
 };
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use(isContentTypeApplicationJSON);
+app.use(
+    helmet({
+      xPoweredBy: true,
+    })
+  );
 app.use("/", indexRoutes);
 app.use("/api/v1/damage", damageRoutes);
 app.use("/api/v1/hazard", hazardRoutes);
