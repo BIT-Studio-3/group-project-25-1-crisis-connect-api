@@ -1,7 +1,7 @@
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import prisma from "../../prisma/client.js";
+import prisma from "../../group-project-25-1-crisis-connect-api/prisma/client.js";
 
 const register = async (req, res) => {
   try {

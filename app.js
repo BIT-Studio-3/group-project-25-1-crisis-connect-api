@@ -6,7 +6,6 @@ import logger from "./middleware/logger.js";
 // Import the index routes module
 import indexRoutes from "./routes/index.js";
 import jwtAuth from "./middleware/jwtauth.js";
-
 import authRoutes from "./routes/auth.js";
 
 // Create an Express application
@@ -45,7 +44,6 @@ const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use("/", indexRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use("/api/auth", authRoutes);
-app.use("/api/institutions", jwtAuth, institutionRoutes); // Authenticated route
 // Start the server on port 3000
 app.listen(PORT, () => {
   console.log(

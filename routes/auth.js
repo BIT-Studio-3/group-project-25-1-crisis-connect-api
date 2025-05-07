@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { register, login } from "../../controllers/v1/auth.js";
+import { register, login } from "../../group-project-25-1-crisis-connect-api/controllers/auth.js";
 
 const router = Router();
 
@@ -47,7 +47,7 @@ const router = Router();
 
 /**
  * @swagger
- * /api/v1/auth/register:
+ * /api/auth/register:
  *   post:
  *     summary: Register a new user
  *     tags:
@@ -96,7 +96,7 @@ router.route("/register").post(register);
 
 /**
  * @swagger
- * /api/v1/auth/login:
+ * /api/auth/login:
  *   post:
  *     summary: Log in an existing user
  *     tags:
