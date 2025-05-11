@@ -31,3 +31,32 @@ const recordContact = async (req, res) => {
   }
 };
 
+const getContacts = async (req, res) => {
+  try {
+    // Extract filters from the query parameters
+    const filters = {
+      streetNumber: req.query.streetNumber || undefined,
+      streetName: req.query.streetName || undefined,
+      city: req.query.city || undefined,
+      region: req.query.region || undefined,
+      type: req.query.type || undefined,
+    };
+    const sortBy = req.query.sortBy || "id";
+    const sortOrder = req.query.sortOrder === "desc" ? "desc" : "asc";
+
+    const contact = await contactRepository.findAll(filters, sortBy, sortOrder);
+
+    // Check if there are no contacts
+    if (!contact) {
+      return res.status(404).json({ message: "No contact record found" });
+    }
+
+    return res.status(200).json({
+      data: contact,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
