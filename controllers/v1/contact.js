@@ -82,3 +82,33 @@ console.log()
   }
 };
 
+const updateContact = async (req, res) => {
+  try {
+    // Find the contact by id
+    let contact = await contactRepository.findById(req.params.id);
+
+    // Check if there is no contact
+    if (!contact) {
+      return res.status(404).json({
+        message: `No contact with the id: ${req.params.id} found`,
+      });
+    }
+
+    // Update the contact
+    contact = await contactRepository.update(req.params.id, {
+      // Data to be updated
+      type: req.body.type,
+      description: req.body.description,
+    });
+
+    return res.status(200).json({
+      message: `Contact record with the id: ${req.params.id} successfully updated`,
+      data: contact,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
