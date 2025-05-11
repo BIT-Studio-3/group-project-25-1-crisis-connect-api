@@ -35,3 +35,36 @@ const validatePostContact = (req, res, next) => {
   next();
 };
 
+const validatePutContact = (req, res, next) => {
+  const contactSchema = Joi.object({
+    name: Joi.string().min(2).max(100).optional().messages({
+      "string.base": "name should be a string",
+      "string.empty": "name cannot be empty",
+      "string.min": "name should have a minimum length of {#limit}",
+      "string.max": "name should have a maximum length of {#limit}",
+    }),
+    email: Joi.string().email().optional().messages({
+      "string.base": "email should be a string",
+      "string.email": "email must be a valid email address",
+      "string.empty": "email cannot be empty",
+    }),
+    message: Joi.string().min(3).max(500).optional().messages({
+      "string.base": "message should be a string",
+      "string.empty": "message cannot be empty",
+      "string.min": "message should have a minimum length of {#limit}",
+      "string.max": "message should have a maximum length of {#limit}",
+    }),
+  }).min(1);
+
+  const { error } = contactSchema.validate(req.body);
+
+  if (error) {
+    return res.status(409).json({
+      message: error.details[0].message,
+    });
+  }
+
+  next();
+};
+
+export { validatePostContact, validatePutContact };
