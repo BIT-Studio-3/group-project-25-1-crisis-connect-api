@@ -112,3 +112,26 @@ const updateContact = async (req, res) => {
   }
 };
 
+const deleteContact = async (req, res) => {
+  try {
+    const contact = await contactRepository.findById(req.params.id);
+
+    if (!contact) {
+      return res.status(404).json({
+        message: `No contact with the id: ${req.params.id} found`,
+      });
+    }
+
+    await contactRepository.delete(req.params.id);
+
+    return res.json({
+      message: `Contact record with the id: ${req.params.id} successfully deleted`,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
+export { recordContact, getContacts, getContact, updateContact, deleteContact };
