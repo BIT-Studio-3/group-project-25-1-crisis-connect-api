@@ -60,3 +60,25 @@ const getContacts = async (req, res) => {
     });
   }
 };
+
+const getContact = async (req, res) => {
+  try {
+    const contact = await contactRepository.findById(req.params.id);
+console.log()
+    // Check if there is no contact
+    if (!contact) {
+      return res.status(404).json({
+        message: `No contact record with the id: ${req.params.id} found`,
+      });
+    }
+
+    return res.status(200).json({
+      data: contact,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
