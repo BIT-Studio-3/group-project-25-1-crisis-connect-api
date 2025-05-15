@@ -20,6 +20,8 @@
     "@prisma/client": "^6.5.0",
     "express": "^4.21.2",
     "group-project-25-1-crisis-connect-api": "file:",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.1.0",
     "joi": "^17.13.3",
     "node-fetch": "^3.3.2",
     "swagger-jsdoc": "^6.2.8",

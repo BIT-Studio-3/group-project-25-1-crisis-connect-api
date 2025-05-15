@@ -1,6 +1,8 @@
 import express from "express";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
  
 // Import the index routes module
 import indexRoutes from "./routes/index.js";
@@ -40,6 +42,17 @@ const swaggerOptions = {
 };
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use(isContentTypeApplicationJSON);
+app.use(
+    helmet({
+      xPoweredBy: true,
+    })
+  );
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+  })
+);
 app.use("/", indexRoutes);
 app.use("/api/v1/damage", damageRoutes);
 app.use("/api/v1/hazard", hazardRoutes);
