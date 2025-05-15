@@ -46,7 +46,7 @@ const getDamages = async (req, res) => {
 
     const damage = await damageRepository.findAll(filters, sortBy, sortOrder);
 
-    // Check if there are no institutions
+    // Check if there are no damages
     if (!damage) {
       return res.status(404).json({ message: "No damage record found" });
     }
@@ -65,7 +65,7 @@ const getDamage = async (req, res) => {
   try {
     const damage = await damageRepository.findById(req.params.id);
 console.log()
-    // Check if there is no institution
+    // Check if there is no damage
     if (!damage) {
       return res.status(404).json({
         message: `No damage record with the id: ${req.params.id} found`,
@@ -84,17 +84,17 @@ console.log()
 
 const updateDamage = async (req, res) => {
   try {
-    // Find the institution by id
+    // Find the damage by id
     let damage = await damageRepository.findById(req.params.id);
 
-    // Check if there is no institution
+    // Check if there is no damage
     if (!damage) {
       return res.status(404).json({
-        message: `No institution with the id: ${req.params.id} found`,
+        message: `No damage with the id: ${req.params.id} found`,
       });
     }
 
-    // Update the institution
+    // Update the damage
     damage = await damageRepository.update(req.params.id, {
       // Data to be updated
       type: req.body.type,
