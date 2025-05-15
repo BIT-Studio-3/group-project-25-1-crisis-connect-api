@@ -22,7 +22,7 @@ describe("Auth", () => {
         lastName: "Doe",
         emailAddress: "john.doe@example.com",
         password: await hashPassword("password123"),
-        role: "ADMIN",
+        role: "FENZ",
       },
     });
   });
