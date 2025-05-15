@@ -21,6 +21,9 @@ const router = Router();
  *         lastName:
  *           type: string
  *           example: "Doe"
+ *         role:
+ *              type: Role
+ *              example: "FENZ"
  *         emailAddress:
  *           type: string
  *           format: email

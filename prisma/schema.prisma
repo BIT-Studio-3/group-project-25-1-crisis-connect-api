@@ -12,20 +12,19 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
-model Institution {
-  id         String       @id @default(uuid())
-  name       String       @unique
-  region     String
-  country    String
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
+enum Role{
+  FENZ
+  civilDefence
+  Police
+  NEMA
 }
+
 
 model User {
   id               String        @id @default(uuid())
   firstName        String
   lastName         String
+  role             Role
   emailAddress     String        @unique
   password         String
   loginAttempts    Int           @default(0)
