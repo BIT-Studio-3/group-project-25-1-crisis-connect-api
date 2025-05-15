@@ -5,29 +5,30 @@ import prisma from "../../group-project-25-1-crisis-connect-api/prisma/client.js
 
 const register = async (req, res) => {
   try {
-    const { firstName, lastName, emailAddress, password } = req.body;
+    const { firstName, lastName, emailAddress, password, role } = req.body;
+
+    if (role === "ADMIN") {
+      return res
+        .status(403)
+        .json({ message: "User cannot register as an admin" });
+    }
 
     let user = await prisma.user.findUnique({ where: { emailAddress } });
 
     if (user) return res.status(409).json({ message: "User already exists" });
 
-    /**
-     * A salt is random bits added to a password before it is hashed. Salts
-     * create unique passwords even if two users have the same passwords
-     */
     const salt = await bcryptjs.genSalt();
-
-    /**
-     * Generate a hash for a given string. The first argument
-     * is a string to be hashed, i.e., Pazzw0rd123 and the second
-     * argument is a salt, i.e., E1F53135E559C253
-     */
     const hashedPassword = await bcryptjs.hash(password, salt);
 
     user = await prisma.user.create({
-      data: { firstName, lastName, emailAddress, password: hashedPassword },
+      data: {
+        firstName,
+        lastName,
+        emailAddress,
+        password: hashedPassword,
+        role: "BASIC",
+      },
       select: {
-        // Select only the fields you want to return
         id: true,
         firstName: true,
         lastName: true,
