@@ -134,4 +134,10 @@ const deleteContact = async (req, res) => {
   }
 };
 
-export { recordContact, getContacts, getContact, updateContact, deleteContact };
+export { 
+  recordContact, 
+  getContacts, 
+  getContact, 
+  updateContact, 
+  deleteContact 
+};
