@@ -5,9 +5,9 @@
 
 import express from "express";
 import {
-  createContact,
-  getAllContacts,
-  getContactById,
+  recordContact,
+  getContacts,
+  getContact,
   updateContact,
   deleteContact,
 } from "../../controllers/v1/contact.js";
@@ -78,7 +78,7 @@ const router = express.Router();
  *       '500':
  *         description: Internal server error
  */
-router.post("/", validatePostContact, createContact);
+router.post("/", validatePostContact, recordContact);
 
 /**
  * @swagger
@@ -99,7 +99,7 @@ router.post("/", validatePostContact, createContact);
  *       '500':
  *         description: Internal server error
  */
-router.get("/", getAllContacts);
+router.get("/", getContacts);
 
 /**
  * @swagger
@@ -127,7 +127,7 @@ router.get("/", getAllContacts);
  *       '500':
  *         description: Internal server error
  */
-router.get("/:id", getContactById);
+router.get("/:id", getContact);
 
 /**
  * @swagger
