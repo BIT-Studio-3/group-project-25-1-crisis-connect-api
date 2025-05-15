@@ -3,23 +3,18 @@
  * @author Mustafa Habibullah
  */
 
-import contactRepository from "../../repositories/contact.js";
+import GenericRepository from "../../repositories/generic.js";
+
+const contactRepository = new GenericRepository('contact');
 
 const recordContact = async (req, res) => {
   try {
-    await contactRepository.create({
-      streetNumber: req.body.streetNumber,
-      streetName: req.body.streetName,
-      city: req.body.city,
-      region: req.body.region,
-      type: req.body.type,
-      description: req.body.description,
+    const newContact = await contactRepository.create({
+      name: req.body.name,
+      email: req.body.email,
+      message: req.body.message,
     });
 
-    // Get all contact from the contact table
-    const newContact = await contactRepository.findAll();
-
-    //send JSON response
     return res.status(201).json({
       message: "Contact successfully recorded",
       data: newContact,
@@ -35,11 +30,9 @@ const getContacts = async (req, res) => {
   try {
     // Extract filters from the query parameters
     const filters = {
-      streetNumber: req.query.streetNumber || undefined,
-      streetName: req.query.streetName || undefined,
-      city: req.query.city || undefined,
-      region: req.query.region || undefined,
-      type: req.query.type || undefined,
+      name: req.query.name || undefined,
+      email: req.query.email || undefined,
+      message: req.query.message || undefined,
     };
     const sortBy = req.query.sortBy || "id";
     const sortOrder = req.query.sortOrder === "desc" ? "desc" : "asc";
