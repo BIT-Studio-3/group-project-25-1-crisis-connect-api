@@ -9,7 +9,7 @@
     "prisma:migrate": "npx prisma migrate dev",
     "prisma:reset": "npx prisma migrate reset --force",
     "prisma:seed-damages": "node ../prisma/seeding/seed-damage.js && node ../prisma/seeding/seed-damage-github.js",
-    "prisma:seed-hazards": "node ./prisma/seeding/seed-hazards.js && node ../prisma/seeding/seed-damage-github.js" 
+    "prisma:seed-hazards": "node ./prisma/seeding/seed-hazards.js && node ../prisma/seeding/seed-damage-github.js"
   },
   "type": "module",
   "keywords": [],
@@ -20,6 +20,8 @@
     "bcryptjs": "^3.0.2",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.1.0",
     "joi": "^17.13.3",
     "node-fetch": "^3.3.2",
     "swagger-jsdoc": "^6.2.8",
