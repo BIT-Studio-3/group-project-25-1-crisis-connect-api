@@ -3,11 +3,13 @@
  * @author Joanna Marowa
  */
 
-import damageRepository from "../../repositories/damage.js";
+import GenericRepository from "../../repositories/generic.js";
+
+const damageRepository = new GenericRepository('damage'); // Pass the model name ('damage')
 
 const recordDamage = async (req, res) => {
   try {
-    await damageRepository.create({
+    const newDamage = await damageRepository.create({
       streetNumber: req.body.streetNumber,
       streetName: req.body.streetName,
       city: req.body.city,
@@ -16,10 +18,6 @@ const recordDamage = async (req, res) => {
       description: req.body.description,
     });
 
-    // Get all damage from the damage table
-    const newDamage = await damageRepository.findAll();
-
-    //send JSON response
     return res.status(201).json({
       message: "Damage successfully recorded",
       data: newDamage,
