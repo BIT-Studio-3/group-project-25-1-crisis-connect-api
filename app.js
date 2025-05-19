@@ -7,7 +7,7 @@ import logger from "./middleware/logger.js";
 // Import the index routes module
 import indexRoutes from "./routes/index.js";
 import jwtAuth from "./middleware/jwtauth.js";
-import authRoutes from "./routes/auth.js";
+import authRoutes from "./routes/v1/auth.js";
 
 import damageRoutes from "./routes/v1/damage.js";
 import hazardRoutes from "./routes/v1/hazard.js";
@@ -45,7 +45,7 @@ const swaggerOptions = {
             },
         ],
     },
-    apis: ["./routes/*.js"],
+    apis: ["./routes/v1/*.js"],
 };
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use(isContentTypeApplicationJSON);
@@ -53,7 +53,7 @@ app.use("/", indexRoutes);
 app.use("/api/v1/damage", damageRoutes);
 app.use("/api/v1/hazard", hazardRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-app.use("/api/auth", authRoutes);
+app.use("/api/v1/auth", authRoutes);
 // Start the server on port 3000
 app.listen(PORT, () => {
   console.log(
