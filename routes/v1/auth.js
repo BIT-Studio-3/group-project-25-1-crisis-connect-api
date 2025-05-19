@@ -1,6 +1,9 @@
+/** 
+*@author Matthew Visser
+*/
 import { Router } from "express";
 
-import { register, login } from "../../group-project-25-1-crisis-connect-api/controllers/auth.js";
+import { register, login } from "../../controllers/auth.js";
 
 const router = Router();
 
