@@ -89,9 +89,9 @@ const updateContact = async (req, res) => {
 
     // Update the contact
     contact = await contactRepository.update(req.params.id, {
-      // Data to be updated
-      type: req.body.type,
-      description: req.body.description,
+      name: req.body.type,
+      email: req.body.email,
+      message: req.body.message,
     });
 
     return res.status(200).json({
