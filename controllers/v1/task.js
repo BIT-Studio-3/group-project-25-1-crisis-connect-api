@@ -124,6 +124,27 @@ const updateTask= async (req, res) => {
   }
 };
 
+const deleteTask= async (req, res) => {
+  try {
+    const task= await damageRepository.findById(req.params.id);
+
+    if (!damage) {
+      return res.status(404).json({
+        message: `No taskwith the id: ${req.params.id} found`,
+      });
+    }
+
+    await damageRepository.delete(req.params.id);
+
+    return res.json({
+      message: `Taskrecord with the id: ${req.params.id} successfully deleted`,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
 
 
 
