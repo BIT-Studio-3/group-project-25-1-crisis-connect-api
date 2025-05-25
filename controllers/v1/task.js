@@ -147,5 +147,4 @@ const deleteTask= async (req, res) => {
 };
 
 
-
-
+export { createTask, getTasks, getTask , updateTask, deleteTask};
