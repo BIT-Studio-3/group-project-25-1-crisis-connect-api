@@ -94,6 +94,36 @@ console.log()
   }
 };
 
+const updateTask= async (req, res) => {
+  try {
+    // Find the institution by id
+    let task= await damageRepository.findById(req.params.id);
+
+    // Check if there is no institution
+    if (!damage) {
+      return res.status(404).json({
+        message: `No institution with the id: ${req.params.id} found`,
+      });
+    }
+
+    // Update the institution
+    task= await damageRepository.update(req.params.id, {
+      // Data to be updated
+      type: req.body.type,
+      description: req.body.description,
+    });
+
+    return res.status(200).json({
+      message: `Taskrecord with the id: ${req.params.id} successfully updated`,
+      data: damage,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
 
 
 
