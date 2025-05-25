@@ -73,6 +73,26 @@ const getTasks = async (req, res) => {
   }
 };
 
+const getTask= async (req, res) => {
+  try {
+    const task= await damageRepository.findById(req.params.id);
+console.log()
+    // Check if there is no institution
+    if (!damage) {
+      return res.status(404).json({
+        message: `No taskrecord with the id: ${req.params.id} found`,
+      });
+    }
+
+    return res.status(200).json({
+      data: damage,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
 
 
 
