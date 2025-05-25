@@ -35,3 +35,46 @@ const createTask = async (req, res) => {
     });
   }
 };
+
+const getTasks = async (req, res) => {
+  try {
+    const filters = {
+      streetName: req.query.streetName || undefined,
+        requirements : req.body.requirements|| undefined,
+        urgency : req.body.urgency || undefined,
+        resources : req.body.resources || undefined,
+        assignedTo: req.body.assignedTo || undefined,
+        supervisor  : req.body.supervisor || undefined,
+        status  : req.body.status || undefined,
+        priority : req.body.priority || undefined,
+        deadline : req.body.deadline || undefined,
+        completedAt: req.body.completedAt || undefined,
+        department: req.body.department || undefined,
+        streetNumber: req.body.streetNumber || undefined,
+    };
+
+    const sortBy = req.query.sortBy || "id";
+    const sortOrder = req.query.sortOrder === "desc" ? "desc" : "asc";
+
+    const tasks = await taskRepository.findAll(filters, sortBy, sortOrder);
+
+    // Check if there are no tasks
+    if (!tasks || tasks.length === 0) {
+      return res.status(404).json({ message: "No tasks found" });
+    }
+
+    return res.status(200).json({
+      data: tasks,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+    });
+  }
+};
+
+
+
+
+
+
