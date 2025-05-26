@@ -114,7 +114,7 @@ const updateTask= async (req, res) => {
     });
 
     return res.status(200).json({
-      message: `Taskrecord with the id: ${req.params.id} successfully updated`,
+      message: `Task record with the id: ${req.params.id} successfully updated`,
       data: damage,
     });
   } catch (err) {
@@ -130,14 +130,14 @@ const deleteTask= async (req, res) => {
 
     if (!damage) {
       return res.status(404).json({
-        message: `No taskwith the id: ${req.params.id} found`,
+        message: `No task with the id: ${req.params.id} found`,
       });
     }
 
     await damageRepository.delete(req.params.id);
 
     return res.json({
-      message: `Taskrecord with the id: ${req.params.id} successfully deleted`,
+      message: `Task record with the id: ${req.params.id} successfully deleted`,
     });
   } catch (err) {
     return res.status(500).json({

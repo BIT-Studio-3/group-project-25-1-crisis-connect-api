@@ -93,7 +93,37 @@ import {
  *           description: "Department responsible for managing the task."
  */
 
-
+/**
+ * @swagger
+ * /api/v1/task:
+ *   post:
+ *     summary: Create a new task record
+ *     tags:
+ *       - Task
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Task'
+ *     responses:
+ *       '201':
+ *         description: Task successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Task successfully recorded"
+ *                 data:
+ *                   $ref: '#/components/schemas/Task'
+ *       '400':
+ *         description: Invalid input data
+ *       '500':
+ *         description: Internal server error
+ */
 router.post("/", createTask);
 
 /**
