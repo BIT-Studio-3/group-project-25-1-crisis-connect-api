@@ -1,15 +1,14 @@
 import prisma from "../prisma/client.js";
 
 class GenericRepository {
-
-  constructor(model){
+  constructor(model) {
     this.model = model;
   }
   async create(data) {
     return await prisma[this.model].create({ data });
   }
 
-  async findAll(filters = {} ,sortBy = "id", sortOrder = "asc") {
+  async findAll(filters = {}, sortBy = "id", sortOrder = "asc") {
     const query = {
       orderBy: {
         [sortBy]: sortOrder, // Sort by the specified column and order
