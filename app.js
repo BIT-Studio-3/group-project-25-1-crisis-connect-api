@@ -7,6 +7,7 @@ import indexRoutes from "./routes/index.js";
 
 import damageRoutes from "./routes/v1/damage.js";
 import hazardRoutes from "./routes/v1/hazard.js";
+import taskRoutes from "./routes/v1/task.js";
 import { isContentTypeApplicationJSON } from "./middleware/utils.js";
 
 // Create an Express application
@@ -42,6 +43,7 @@ app.use(isContentTypeApplicationJSON);
 app.use("/", indexRoutes);
 app.use("/api/v1/damage", damageRoutes);
 app.use("/api/v1/hazard", hazardRoutes);
+app.use("/api/v1/task", taskRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  
 // Start the server on port 3000

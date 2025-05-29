@@ -1,101 +1,105 @@
 /**
- * @file Manages all the routes to d
+ * @file Manages all the task routes
  * @author Joanna Marowa
- */
+*/
+
 import express from "express";
 
 import {
-        createTask,
-        getTasks,
-        getTask ,
-        updateTask,
-        deleteTask,
+    createTask,
+    getTasks,
+    getTask,
+    updateTask,
+    deleteTask,
 } from "../../controllers/v1/task.js";
 
-import {
-        validatePostDamage,
-        validatePutDamage,
-      } from "../../middleware/validation/task.js";
-const router = express.Router();
-
+/*import {
+    validatePostTask,
+    validatePutTask,
+    } from "../../middleware/validation/task.js";
+    */
+   
+   const router = express.Router();
 /**
  * @swagger
  * components:
  *   schemas:
  *     Task:
  *       type: object
- *       description: Represents an emergency service task including required response details, urgency level, assigned personnel, and status.
+ *       description: "Represents an emergency service task, detailing incident specifics, assigned resources, and timing."
  *       properties:
  *         id:
  *           type: string
  *           format: uuid
- *           example: "edca3412-91ba-49b5-bc8e-a7a3219b3e42"
- *           description: Unique task identifier.
+ *           example: "8c10f0a2-4d3a-11ec-81d3-0242ac130003"
+ *           description: "Unique identifier for the emergency task."
  *         description:
  *           type: string
- *           example: "Respond to fire outbreak at 120 Queen Street"
- *           description: Description of the emergency task or incident.
+ *           example: "Fire outbreak at residential building, 3rd floor."
+ *           description: "Detailed description of the emergency task."
  *         requirements:
  *           type: string
- *           example: "Fire extinguishers, water hoses, oxygen masks"
- *           description: Equipment or conditions required to handle the emergency.
+ *           example: "Fire trucks, breathing apparatus, medical kits"
+ *           description: "Equipment or conditions required to handle the task."
  *         urgency:
  *           type: string
  *           example: "Critical"
- *           description: Indicates urgency level (e.g., Low, Medium, High, Critical).
+ *           description: "Urgency level indicating the criticality of the task."
  *         resources:
  *           type: string
- *           example: "2 fire trucks, 1 ambulance, 6 personnel"
- *           description: Resources allocated or needed for the task.
+ *           example: "4 firefighters, 2 ambulances"
+ *           description: "Resources allocated or required for this task."
  *         assignedTo:
  *           type: string
- *           example: "Unit A1 - Fire Response Team"
- *           description: The unit or personnel assigned to the task.
+ *           example: "team_alpha"
+ *           description: "Team or individual assigned to the task."
  *         supervisor:
  *           type: string
- *           example: "Chief Morgan"
- *           description: Name of the supervisor overseeing the response.
+ *           example: "chief_jones"
+ *           description: "Supervisor responsible for overseeing the task."
  *         status:
  *           type: string
- *           example: "Dispatched"
- *           description: Current task status (e.g., Pending, Dispatched, In Progress, Completed).
+ *           example: "dispatched"
+ *           description: "Current status of the task."
  *         priority:
  *           type: integer
  *           example: 1
- *           description: Numerical representation of priority (1 = highest).
+ *           description: "Priority of the task, with 1 as the highest."
  *         createdAt:
  *           type: string
  *           format: date-time
- *           example: "2025-05-30T08:15:00Z"
- *           description: Timestamp when the task was created.
+ *           example: "2025-05-26T14:00:00Z"
+ *           description: "Timestamp when the task was created."
  *         updatedAt:
  *           type: string
  *           format: date-time
- *           example: "2025-05-30T08:45:00Z"
- *           description: Timestamp when the task was last updated.
+ *           example: "2025-05-26T14:30:00Z"
+ *           description: "Timestamp when the task was last updated."
  *         deadline:
  *           type: string
  *           format: date-time
- *           example: "2025-05-30T09:00:00Z"
- *           description: Optional deadline by which the task must be responded to or completed.
+ *           nullable: true
+ *           example: "2025-05-26T15:30:00Z"
+ *           description: "Optional deadline to complete the task."
  *         completedAt:
  *           type: string
  *           format: date-time
- *           example: "2025-05-30T08:58:00Z"
- *           description: Timestamp when the task was completed.
+ *           nullable: true
+ *           example: "2025-05-26T15:10:00Z"
+ *           description: "Timestamp when the task was completed."
  *         department:
  *           type: string
  *           example: "Fire Department"
- *           description: Emergency department responsible for the task.
+ *           description: "Department responsible for managing the task."
  */
 
 /**
  * @swagger
- * /api/v1/emergency/task:
+ * /api/v1/task:
  *   post:
- *     summary: Create a new emergency task
+ *     summary: Create a new task record
  *     tags:
- *       - Emergency Task
+ *       - Task
  *     requestBody:
  *       required: true
  *       content:
@@ -104,7 +108,7 @@ const router = express.Router();
  *             $ref: '#/components/schemas/Task'
  *     responses:
  *       '201':
- *         description: Emergency task successfully created
+ *         description: Task successfully created
  *         content:
  *           application/json:
  *             schema:
@@ -112,7 +116,7 @@ const router = express.Router();
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Emergency task successfully created"
+ *                   example: "Task successfully recorded"
  *                 data:
  *                   $ref: '#/components/schemas/Task'
  *       '400':
@@ -124,20 +128,93 @@ router.post("/", createTask);
 
 /**
  * @swagger
- * /api/v1/emergency/task:
+ * /api/v1/task:
  *   get:
- *     summary: Get all emergency tasks
+ *     summary: Get all task records (with optional filters and sorting)
  *     tags:
- *       - Emergency Task
+ *       - Task
+ *     parameters:
+ *       - in: query
+ *         name: description
+ *         schema:
+ *           type: string
+ *         description: Filter task records by description
+ *       - in: query
+ *         name:  requirements
+ *         schema:
+ *           type: string
+ *         description: Filter task records by  requirements
+ *       - in: query
+ *         name: urgency
+ *         schema:
+ *           type: string
+ *         description: Filter task records by urgency
+ *       - in: query
+ *         name: resources
+ *         schema:
+ *           type: string
+ *         description: Filter task records by resources
+ *       - in: query
+ *         name: assignedTo
+ *         schema:
+ *           type: string
+ *         description: Filter task records by who the task is assigned to  (e.g., Fire Department,Fulton Hogan)
+ *        - in: query
+ *         name: supervisor
+ *         schema:
+ *           type: string
+ *         description: Filter task records by supervisor
+ *       - in: query
+ *         name:  status
+ *         schema:
+ *           type: string
+ *         description: Filter task records by status
+ *   - in: query
+ *         name:  priority
+ *         schema:
+ *           type: integer
+ *         description: Filter task records by priority
+ *  - in: query
+ *         name:  deadline
+ *         schema:
+ *           type: date-time 
+ *         description: Filter task records by deadline 
+ * - in: query
+ *         name:  completedAt:
+ *         schema:
+ *           type: date-time 
+ *         description: Filter task records by completedAt
+ * - in: query
+ *         name:  department
+ *         schema:
+ *           type: date-time 
+ *         description: Filter task records by department
+ *       - in: query
+ *         name: sortBy
+ *         schema:
+ *           type: string
+ *           enum: [id, streetNumber, streetName, urgency, resources, type]
+ *         description: Field to sort the task records by (default is 'id')
+ *       - in: query
+ *         name: sortOrder
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *         description: Order to sort the task records by (default is 'asc')
  *     responses:
  *       '200':
- *         description: A list of emergency tasks
+ *         description: A list of filtered and sorted task records
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Task'
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Task'
+ *       '404':
+ *         description: No task records found matching the filters
  *       '500':
  *         description: Internal server error
  */
@@ -145,11 +222,11 @@ router.get("/", getTasks);
 
 /**
  * @swagger
- * /api/v1/emergency/task/{id}:
+ * /api/v1/task/{id}:
  *   get:
- *     summary: Get an emergency task by ID
+ *     summary: Get a single task record by ID
  *     tags:
- *       - Emergency Task
+ *       - Task
  *     parameters:
  *       - in: path
  *         name: id
@@ -159,13 +236,13 @@ router.get("/", getTasks);
  *         description: The task ID
  *     responses:
  *       '200':
- *         description: Task successfully retrieved
+ *         description: Successfully retrieved the task record
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Task'
  *       '404':
- *         description: Task not found
+ *         description: No task record found with the given ID
  *       '500':
  *         description: Internal server error
  */
@@ -173,11 +250,11 @@ router.get("/:id", getTask);
 
 /**
  * @swagger
- * /api/v1/emergency/task/{id}:
+ * /api/v1/task/{id}:
  *   put:
- *     summary: Update an emergency task by ID
+ *     summary: Update a task record by ID
  *     tags:
- *       - Emergency Task
+ *       - Task
  *     parameters:
  *       - in: path
  *         name: id
@@ -193,7 +270,7 @@ router.get("/:id", getTask);
  *             $ref: '#/components/schemas/Task'
  *     responses:
  *       '200':
- *         description: Task successfully updated
+ *         description: Successfully updated the task record
  *         content:
  *           application/json:
  *             schema:
@@ -201,11 +278,11 @@ router.get("/:id", getTask);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Emergency task successfully updated"
+ *                   example: "Task with the ID {id} successfully updated"
  *                 data:
  *                   $ref: '#/components/schemas/Task'
  *       '404':
- *         description: Task not found
+ *         description: No task record found with the given ID
  *       '500':
  *         description: Internal server error
  */
@@ -213,21 +290,21 @@ router.put("/:id", updateTask);
 
 /**
  * @swagger
- * /api/v1/emergency/task/{id}:
+ * /api/v1/task/{id}:
  *   delete:
- *     summary: Delete an emergency task by ID
+ *     summary: Delete a task record by ID
  *     tags:
- *       - Emergency Task
+ *       - Task
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: The task ID
+ *         description: The ID of the task record to delete
  *     responses:
  *       '200':
- *         description: Task successfully deleted
+ *         description: Successfully deleted the task record
  *         content:
  *           application/json:
  *             schema:
@@ -235,14 +312,13 @@ router.put("/:id", updateTask);
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Emergency task successfully deleted"
+ *                   example: "Task with the ID {id} successfully deleted"
  *       '404':
- *         description: Task not found
+ *         description: No task record found with the given ID
  *       '500':
  *         description: Internal server error
  */
 router.delete("/:id", deleteTask);
 
 export default router;
-
 
