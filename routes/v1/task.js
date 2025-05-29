@@ -171,3 +171,43 @@ router.get("/", getTasks);
  */
 router.get("/:id", getTask);
 
+/**
+ * @swagger
+ * /api/v1/emergency/task/{id}:
+ *   put:
+ *     summary: Update an emergency task by ID
+ *     tags:
+ *       - Emergency Task
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The task ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Task'
+ *     responses:
+ *       '200':
+ *         description: Task successfully updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Emergency task successfully updated"
+ *                 data:
+ *                   $ref: '#/components/schemas/Task'
+ *       '404':
+ *         description: Task not found
+ *       '500':
+ *         description: Internal server error
+ */
+router.put("/:id", updateTask);
+
