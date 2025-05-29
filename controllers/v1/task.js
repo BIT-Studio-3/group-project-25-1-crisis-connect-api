@@ -3,22 +3,23 @@
  * @author Joanna Marowa
  */
 
-import taskRepository from "../../repositories/generic.js"
+import GenericRepository from "../../repositories/generic.js";
+
+const taskRepository = new GenericRepository('task');
 
 const createTask = async (req, res) => {
   try {
     await taskRepository.create({
+        description : req.body.description,
         requirements : req.body.requirements,
         urgency : req.body.urgency,
         resources : req.body.resources,
         assignedTo: req.body.assignedTo,
         supervisor  : req.body.supervisor,
         status  : req.body.status,
-        priority : req.body.priority,
         deadline : req.body.deadline,
         completedAt: req.body.completedAt,
-        department: req.body.department,
-        streetNumber: req.body.streetNumber,
+        department: req.body.department 
     });
 
     // Get all tasks from the task table
@@ -39,19 +40,17 @@ const createTask = async (req, res) => {
 const getTasks = async (req, res) => {
   try {
     const filters = {
-      streetName: req.query.streetName || undefined,
+      description: req.query.description || undefined,
         requirements : req.body.requirements|| undefined,
         urgency : req.body.urgency || undefined,
         resources : req.body.resources || undefined,
         assignedTo: req.body.assignedTo || undefined,
         supervisor  : req.body.supervisor || undefined,
         status  : req.body.status || undefined,
-        priority : req.body.priority || undefined,
         deadline : req.body.deadline || undefined,
         completedAt: req.body.completedAt || undefined,
-        department: req.body.department || undefined,
-        streetNumber: req.body.streetNumber || undefined,
-    };
+        department: req.body.department || undefined
+    }
 
     const sortBy = req.query.sortBy || "id";
     const sortOrder = req.query.sortOrder === "desc" ? "desc" : "asc";
@@ -75,17 +74,17 @@ const getTasks = async (req, res) => {
 
 const getTask= async (req, res) => {
   try {
-    const task= await damageRepository.findById(req.params.id);
+    const task= await taskRepository.findById(req.params.id);
 console.log()
-    // Check if there is no institution
-    if (!damage) {
+    // Check if there is no task
+    if (!task) {
       return res.status(404).json({
-        message: `No taskrecord with the id: ${req.params.id} found`,
+        message: `No task record with the id: ${req.params.id} found`,
       });
     }
 
     return res.status(200).json({
-      data: damage,
+      data: task,
     });
   } catch (err) {
     return res.status(500).json({
@@ -96,26 +95,27 @@ console.log()
 
 const updateTask= async (req, res) => {
   try {
-    // Find the institution by id
-    let task= await damageRepository.findById(req.params.id);
+    // Find the task by id
+    let task= await taskRepository.findById(req.params.id);
 
-    // Check if there is no institution
-    if (!damage) {
+    // Check if there is no task
+    if (!task) {
       return res.status(404).json({
-        message: `No institution with the id: ${req.params.id} found`,
+        message: `No task with the id: ${req.params.id} found`,
       });
     }
 
-    // Update the institution
-    task= await damageRepository.update(req.params.id, {
+    // Update the task
+    task= await taskRepository.update(req.params.id, {
       // Data to be updated
-      type: req.body.type,
-      description: req.body.description,
+        urgency : req.body.urgency,
+        status  : req.body.status,
+        completedAt: req.body.completedAt,
     });
 
     return res.status(200).json({
       message: `Task record with the id: ${req.params.id} successfully updated`,
-      data: damage,
+      data: task,
     });
   } catch (err) {
     return res.status(500).json({
@@ -126,15 +126,15 @@ const updateTask= async (req, res) => {
 
 const deleteTask= async (req, res) => {
   try {
-    const task= await damageRepository.findById(req.params.id);
+    const task= await taskRepository.findById(req.params.id);
 
-    if (!damage) {
+    if (!task) {
       return res.status(404).json({
         message: `No task with the id: ${req.params.id} found`,
       });
     }
 
-    await damageRepository.delete(req.params.id);
+    await taskRepository.delete(req.params.id);
 
     return res.json({
       message: `Task record with the id: ${req.params.id} successfully deleted`,
