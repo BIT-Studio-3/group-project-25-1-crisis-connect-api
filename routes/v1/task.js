@@ -61,20 +61,6 @@ import {
  *           type: string
  *           example: "dispatched"
  *           description: "Current status of the task."
- *         priority:
- *           type: integer
- *           example: 1
- *           description: "Priority of the task, with 1 as the highest."
- *         createdAt:
- *           type: string
- *           format: date-time
- *           example: "2025-05-26T14:00:00Z"
- *           description: "Timestamp when the task was created."
- *         updatedAt:
- *           type: string
- *           format: date-time
- *           example: "2025-05-26T14:30:00Z"
- *           description: "Timestamp when the task was last updated."
  *         deadline:
  *           type: string
  *           format: date-time
@@ -91,7 +77,17 @@ import {
  *           type: string
  *           example: "Fire Department"
  *           description: "Department responsible for managing the task."
- */
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2025-05-26T14:00:00Z"
+ *           description: "Timestamp when the task was created."
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2025-05-26T14:30:00Z"
+ *           description: "Timestamp when the task was last updated."
+*/
 
 /**
  * @swagger
@@ -169,11 +165,6 @@ router.post("/", createTask);
  *         schema:
  *           type: string
  *         description: Filter task records by status
- *   - in: query
- *         name:  priority
- *         schema:
- *           type: integer
- *         description: Filter task records by priority
  *  - in: query
  *         name:  deadline
  *         schema:
