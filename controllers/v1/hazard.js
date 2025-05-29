@@ -2,8 +2,9 @@
  * @file Manages all hazard methods
  * @author Mustafa Habibullah
  */
+import GenericRepository from "../../repositories/generic.js";
 
-import hazardRepository from "../../repositories/hazard.js";
+const hazardRepository = new GenericRepository('task');
 
 const createHazard = async (req, res) => {
   try {
