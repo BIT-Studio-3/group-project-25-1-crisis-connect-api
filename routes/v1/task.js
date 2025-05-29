@@ -211,3 +211,38 @@ router.get("/:id", getTask);
  */
 router.put("/:id", updateTask);
 
+/**
+ * @swagger
+ * /api/v1/emergency/task/{id}:
+ *   delete:
+ *     summary: Delete an emergency task by ID
+ *     tags:
+ *       - Emergency Task
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The task ID
+ *     responses:
+ *       '200':
+ *         description: Task successfully deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Emergency task successfully deleted"
+ *       '404':
+ *         description: Task not found
+ *       '500':
+ *         description: Internal server error
+ */
+router.delete("/:id", deleteTask);
+
+export default router;
+
+
