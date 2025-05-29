@@ -46,7 +46,6 @@ model task {
   assignedTo    String
   supervisor    String
   status        String
-  priority      Int
   createdAt     DateTime @default(now())
   completedAt   DateTime?
   department    String
