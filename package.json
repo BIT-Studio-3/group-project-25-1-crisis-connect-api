@@ -19,6 +19,12 @@
     "@prisma/client": "^6.8.2",
     "bcryptjs": "^3.0.2",
     "express": "^4.21.2",
+<<<<<<< HEAD
+=======
+    "jsonwebtoken": "^9.0.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.1.0",
+>>>>>>> ef203322d418b8d44af72677a2285f82313da4a1
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "node-fetch": "^3.3.2",
