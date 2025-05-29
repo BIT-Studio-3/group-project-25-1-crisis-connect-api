@@ -143,3 +143,31 @@ router.post("/", createTask);
  */
 router.get("/", getTasks);
 
+/**
+ * @swagger
+ * /api/v1/emergency/task/{id}:
+ *   get:
+ *     summary: Get an emergency task by ID
+ *     tags:
+ *       - Emergency Task
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The task ID
+ *     responses:
+ *       '200':
+ *         description: Task successfully retrieved
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Task'
+ *       '404':
+ *         description: Task not found
+ *       '500':
+ *         description: Internal server error
+ */
+router.get("/:id", getTask);
+
