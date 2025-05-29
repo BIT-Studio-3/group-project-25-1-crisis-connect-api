@@ -2,8 +2,9 @@
  * @file Manages all  damage methods
  * @author Joanna Marowa
  */
+import GenericRepository from "../../repositories/generic.js";
 
-import damageRepository from "../../repositories/damage.js";
+const damageRepository = new GenericRepository('task');
 
 const recordDamage = async (req, res) => {
   try {
