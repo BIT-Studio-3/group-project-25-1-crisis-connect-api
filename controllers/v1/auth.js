@@ -1,7 +1,7 @@
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import prisma from "../../group-project-25-1-crisis-connect-api/prisma/client.js";
+import prisma from "../../prisma/client.js";
 
 const register = async (req, res) => {
   try {
@@ -26,7 +26,7 @@ const register = async (req, res) => {
         lastName,
         emailAddress,
         password: hashedPassword,
-        role: "BASIC",
+        role: "FENZ",
       },
       select: {
         id: true,

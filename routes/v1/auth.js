@@ -1,11 +1,13 @@
 /** 
 *@author Matthew Visser
 */
+import express from "express";
+
 import { Router } from "express";
 
-import { register, login } from "../../controllers/auth.js";
+import { register, login } from "../../controllers/v1/auth.js";
 
-const router = Router();
+const router = express.Router();
 
 /**
  * @swagger
@@ -53,7 +55,7 @@ const router = Router();
 
 /**
  * @swagger
- * /api/auth/register:
+ * /api/v1/auth/register:
  *   post:
  *     summary: Register a new user
  *     tags:
@@ -102,7 +104,7 @@ router.route("/register").post(register);
 
 /**
  * @swagger
- * /api/auth/login:
+ * /api/v1/auth/login:
  *   post:
  *     summary: Log in an existing user
  *     tags:
