@@ -12,13 +12,13 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 enum Role{
   FENZ
   civilDefence
   Police
   NEMA
 }
-
 
 model User {
   id               String        @id @default(uuid())
@@ -31,7 +31,8 @@ model User {
   lastLoginAttempt DateTime?
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @default(now())
-  }
+  } 
+  
 model Damage {
   id                String       @id @default(uuid())
   streetNumber     String 
