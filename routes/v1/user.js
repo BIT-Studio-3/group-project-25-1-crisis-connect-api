@@ -26,12 +26,12 @@ const router = express.Router();
  *         lastName:
  *           type: string
  *           example: "Doe"
- *         email:
+ *         emailAddress:
  *           type: string
  *           example: "john.doe@example.com"
  *         role:
  *           type: string
- *           example: "admin"
+ *           example: "FENZ"
  *         createdAt:
  *           type: string
  *           format: date-time
@@ -44,7 +44,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /api/users:
+ * /api/v1/user:
  *   post:
  *     summary: Create a new user
  *     tags:
@@ -73,11 +73,11 @@ const router = express.Router();
  *       '500':
  *         description: Internal server error
  */
-router.post("/users", createUser);
+router.post("/", createUser);
 
 /**
  * @swagger
- * /api/users:
+ * /api/v1/user:
  *   get:
  *     summary: Get all users
  *     tags:
@@ -99,11 +99,11 @@ router.post("/users", createUser);
  *       '500':
  *         description: Internal server error
  */
-router.get("/users", getUsers);
+router.get("/", getUsers);
 
 /**
  * @swagger
- * /api/users/{id}:
+ * /api/v1/user/{id}:
  *   get:
  *     summary: Get a user by id
  *     tags:
@@ -127,11 +127,11 @@ router.get("/users", getUsers);
  *       '500':
  *         description: Internal server error
  */
-router.get("/users/:id", getUser);
+router.get("/:id", getUser);
 
 /**
  * @swagger
- * /api/users/{id}:
+ * /api/v1/user/{id}:
  *   put:
  *     summary: Update a user by id
  *     tags:
@@ -166,11 +166,11 @@ router.get("/users/:id", getUser);
  *       '500':
  *         description: Internal server error
  */
-router.put("/users/:id", updateUser);
+router.put("/:id", updateUser);
 
 /**
  * @swagger
- * /api/users/{id}:
+ * /api/v1/user/{id}:
  *   delete:
  *     summary: Delete a user by id
  *     tags:
@@ -197,6 +197,6 @@ router.put("/users/:id", updateUser);
  *       '500':
  *         description: Internal server error
  */
-router.delete("/users/:id", deleteUser);
+router.delete("/:id", deleteUser);
 
 export default router;
