@@ -13,13 +13,10 @@ const createUser = async (req, res) => {
       emailAddress: req.body.emailAddress,
     });
 
-    // Get all users from the user table
-    const newUsers = await userRepository.findAll();
-
     // Send JSON response
     return res.status(201).json({
       message: "User successfully created",
-      data: newUsers,
+      data: newUser,
     });
   } catch (err) {
     return res.status(500).json({
@@ -39,15 +36,15 @@ const getUsers = async (req, res) => {
     const sortBy = req.query.sortBy || "id";
     const sortOrder = req.query.sortOrder === "desc" ? "desc" : "asc";
 
-    const user = await userRepository.findAll(filters, sortBy, sortOrder);
+    const users = await userRepository.findAll(filters, sortBy, sortOrder);
 
     // Check if there are no users
-    if (!user) {
+    if (!users || users.length === 0) {
       return res.status(404).json({ message: "No users found" });
     }
 
     return res.status(200).json({
-      data: user,
+      data: users,
     });
   } catch (err) {
     return res.status(500).json({
@@ -87,8 +84,12 @@ const updateUser = async (req, res) => {
     }
 
     user = await userRepository.update(req.params.id, {
-      type: req.body.type,
-      description: req.body.description,
+      data: {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        role: req.body.role,
+        emailAddress: req.body.emailAddress,
+      },
     });
 
     return res.status(200).json({
