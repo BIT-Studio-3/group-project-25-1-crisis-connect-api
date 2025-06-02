@@ -1,9 +1,13 @@
-// Add the following code under import prisma from "../prisma/client.js";
+import GenericRepository from "../../repositories/generic.js";
+
+// Instantiate the GenericRepository with the 'hazard' model
+const userRepository = new GenericRepository('user'); 
+
 const createUser = async (req, res) => {
   // Try/catch blocks are used to handle exceptions
   try {
     // Create a new institution
-    await prisma.user.create({
+    await userRepository.create({
       // Data to be inserted
       data: {
         firstName: req.body.firstName,
@@ -14,7 +18,7 @@ const createUser = async (req, res) => {
     });
 
     // Get all institutions from the institution table
-    const newuser = await prisma.user.findMany();
+    const newUser = await userRepository.findAll();
 
     // Send a JSON response
     return res.status(201).json({
@@ -30,7 +34,7 @@ const createUser = async (req, res) => {
 // Add the following code under the createInstitution function
 const getUsers = async (req, res) => {
   try {
-    const user = await prisma.user.findMany();
+    const user = await userRepository.findAll();
 
     // Check if there are no institutions
     if (!user) {
@@ -49,7 +53,7 @@ const getUsers = async (req, res) => {
 // Add the following code under the getInstitutions function
 const getUser = async (req, res) => {
   try {
-    const user = await prisma.user.findUnique({
+    const user = await userRepository.findUnique({
       where: { id: req.params.id },
     });
 
@@ -73,7 +77,7 @@ const getUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     // Find the institution by id
-    let user = await prisma.user.findUnique({
+    let user = await userRepository.findUnique({
       where: { id: req.params.id },
     });
 
@@ -85,7 +89,7 @@ const updateUser = async (req, res) => {
     }
 
     // Update the institution
-    user = await prisma.user.update({
+    user = await userRepository.update({
       where: { id: req.params.id },
       data: {
         // Data to be updated
@@ -109,7 +113,7 @@ const updateUser = async (req, res) => {
 // Add the following code under the updateInstitution function
 const deleteUser = async (req, res) => {
   try {
-    const user = await prisma.user.findUnique({
+    const user = await userRepository.findUnique({
       where: { id: req.params.id },
     });
 
@@ -119,7 +123,7 @@ const deleteUser = async (req, res) => {
       });
     }
 
-    await prisma.user.delete({
+    await userRepository.delete({
       where: { id: req.params.id },
     });
 
