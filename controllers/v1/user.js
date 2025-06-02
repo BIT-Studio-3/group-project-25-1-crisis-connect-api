@@ -1,29 +1,25 @@
 import GenericRepository from "../../repositories/generic.js";
 
-// Instantiate the GenericRepository with the 'hazard' model
+// Instantiate the GenericRepository with the 'user' model
 const userRepository = new GenericRepository('user'); 
 
 const createUser = async (req, res) => {
-  // Try/catch blocks are used to handle exceptions
   try {
-    // Create a new institution
-    await userRepository.create({
-      // Data to be inserted
-      data: {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        role: req.body.role,
-        email: req.body.email,
-      },
+    // Create a new user
+    const newUser = await userRepository.create({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      role: req.body.role,
+      emailAddress: req.body.emailAddress,
     });
 
-    // Get all institutions from the institution table
-    const newUser = await userRepository.findAll();
+    // Get all users from the user table
+    const newUsers = await userRepository.findAll();
 
-    // Send a JSON response
+    // Send JSON response
     return res.status(201).json({
       message: "User successfully created",
-      data: newUser,
+      data: newUsers,
     });
   } catch (err) {
     return res.status(500).json({
@@ -31,12 +27,21 @@ const createUser = async (req, res) => {
     });
   }
 };
-// Add the following code under the createInstitution function
+// Add the following code under the createUser function
 const getUsers = async (req, res) => {
   try {
-    const user = await userRepository.findAll();
+    const filters = {
+      firstName: req.body.firstName || undefined,
+      lastName: req.body.lastName || undefined,
+      role: req.body.role || undefined,
+      emailAddress: req.body.emailAddress || undefined,
+    }
+    const sortBy = req.query.sortBy || "id";
+    const sortOrder = req.query.sortOrder === "desc" ? "desc" : "asc";
 
-    // Check if there are no institutions
+    const user = await userRepository.findAll(filters, sortBy, sortOrder);
+
+    // Check if there are no users
     if (!user) {
       return res.status(404).json({ message: "No users found" });
     }
@@ -50,17 +55,14 @@ const getUsers = async (req, res) => {
     });
   }
 };
-// Add the following code under the getInstitutions function
+
 const getUser = async (req, res) => {
   try {
-    const user = await userRepository.findUnique({
-      where: { id: req.params.id },
-    });
+    const user = await userRepository.findById(req.params.id);
 
-    // Check if there is no institution
     if (!user) {
       return res.status(404).json({
-        message: `No user with the id: ${req.params.id} found`,
+        message: `No user record with the id: ${req.params.id} found`,
       });
     }
 
@@ -73,35 +75,24 @@ const getUser = async (req, res) => {
     });
   }
 };
-// Add the following code under the getInstitution function
+// Add the following code under the getUser function
 const updateUser = async (req, res) => {
   try {
-    // Find the institution by id
-    let user = await userRepository.findUnique({
-      where: { id: req.params.id },
-    });
+    let user = await userRepository.findById(req.params.id);
 
-    // Check if there is no institution
     if (!user) {
       return res.status(404).json({
-        message: `No user with the id: ${req.params.id} found`,
+        message: `No user record with the id: ${req.params.id} found`,
       });
     }
 
-    // Update the institution
-    user = await userRepository.update({
-      where: { id: req.params.id },
-      data: {
-        // Data to be updated
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        role: req.body.role,
-        email: req.body.email,
-      },
+    user = await userRepository.update(req.params.id, {
+      type: req.body.type,
+      description: req.body.description,
     });
 
     return res.status(200).json({
-      message: `Institution with the id: ${req.params.id} successfully updated`,
+      message: `User record with the id: ${req.params.id} successfully updated`,
       data: user,
     });
   } catch (err) {
@@ -110,33 +101,30 @@ const updateUser = async (req, res) => {
     });
   }
 };
-// Add the following code under the updateInstitution function
+
+// Add the following code under the updateUser function
 const deleteUser = async (req, res) => {
   try {
-    const user = await userRepository.findUnique({
-      where: { id: req.params.id },
-    });
-
+    const user = await userRepository.findById(req.params.id);
     if (!user) {
       return res.status(404).json({
-        message: `No institution with the id: ${req.params.id} found`,
+        message: `No user record with the id: ${req.params.id} found`,
       });
     }
-
-    await userRepository.delete({
-      where: { id: req.params.id },
-    });
+    await userRepository.delete(req.params.id);
 
     return res.json({
-      message: `User with the id: ${req.params.id} successfully deleted`,
+      message: `User record with the id: ${req.params.id} successfully deleted`,
     });
+
   } catch (err) {
     return res.status(500).json({
       message: err.message,
     });
   }
 };
-// Add the following code under the deleteInstitution function
+
+// Add the following code under the deleteUser function
 export {
   createUser,
   getUsers,
