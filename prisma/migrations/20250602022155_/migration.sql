@@ -8,7 +8,6 @@ CREATE TABLE "User" (
     "lastName" TEXT NOT NULL,
     "role" "Role" NOT NULL,
     "emailAddress" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
     "loginAttempts" INTEGER NOT NULL DEFAULT 0,
     "lastLoginAttempt" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -45,6 +44,18 @@ CREATE TABLE "hazard" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "hazard_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "contact" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "message" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "contact_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
