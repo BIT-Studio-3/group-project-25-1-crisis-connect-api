@@ -7,7 +7,7 @@ import rateLimit from "express-rate-limit";
  
 // Import the index routes module
 import indexRoutes from "./routes/index.js";
-import jwtAuth from "./middleware/jwtAuth.js";
+// import jwtAuth from "./middleware/jwtAuth.js";
 import authRoutes from "./routes/v1/auth.js";
 
 import damageRoutes from "./routes/v1/damage.js";
