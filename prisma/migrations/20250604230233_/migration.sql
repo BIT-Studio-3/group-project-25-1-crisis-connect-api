@@ -38,12 +38,11 @@ CREATE TABLE "task" (
     "assignedTo" TEXT NOT NULL,
     "supervisor" TEXT NOT NULL,
     "status" TEXT NOT NULL,
-    "priority" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-    "deadline" TIMESTAMP(3),
     "completedAt" TIMESTAMP(3),
     "department" TEXT NOT NULL,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "deadline" TIMESTAMP(3),
 
     CONSTRAINT "task_pkey" PRIMARY KEY ("id")
 );
