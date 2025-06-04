@@ -9,7 +9,7 @@ const taskRepository = new GenericRepository('task');
 
 const createTask = async (req, res) => {
   try {
-    await taskRepository.create({
+    const newTasks = await taskRepository.create({
         description : req.body.description,
         requirements : req.body.requirements,
         urgency : req.body.urgency,
@@ -22,13 +22,10 @@ const createTask = async (req, res) => {
         department: req.body.department 
     });
 
-    // Get all tasks from the task table
-    const newTasks = await taskRepository.findAll();
-
     // Send JSON response
     return res.status(201).json({
       message: "Task successfully created",
-      data: newTasks,
+      newTasks,
     });
   } catch (err) {
     return res.status(500).json({
@@ -110,7 +107,7 @@ const updateTask= async (req, res) => {
       // Data to be updated
         urgency : req.body.urgency,
         status  : req.body.status,
-        completedAt: req.body.completedAt,
+        completedAt: req.body.completedAt
     });
 
     return res.status(200).json({
