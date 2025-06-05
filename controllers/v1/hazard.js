@@ -19,13 +19,11 @@ const createHazard = async (req, res) => {
       description: req.body.description,
     });
 
-    // Get all hazards from the hazard table
-    const newHazards = await hazardRepository.findAll();
 
     // Send JSON response
     return res.status(201).json({
       message: "Hazard successfully created",
-      data: newHazards,
+      data: newHazard,
     });
   } catch (err) {
     return res.status(500).json({

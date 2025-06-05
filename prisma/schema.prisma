@@ -12,7 +12,26 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+enum Role {
+  FENZ
+  civilDefence
+  Police
+  NEMA
+}
 
+
+model User {
+  id               String        @id @default(uuid())
+  firstName        String
+  lastName         String
+  role             Role
+  emailAddress     String        @unique
+  password         String
+  loginAttempts    Int           @default(0)
+  lastLoginAttempt DateTime?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @default(now())
+  }
 model Damage {
   id                String       @id @default(uuid())
   streetNumber     String 

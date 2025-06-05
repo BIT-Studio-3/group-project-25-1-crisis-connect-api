@@ -1,14 +1,18 @@
 import express from "express";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import logger from "./middleware/logger.js";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
  
 // Import the index routes module
 import indexRoutes from "./routes/index.js";
+// import jwtAuth from "./middleware/jwtAuth.js";
+import authRoutes from "./routes/v1/auth.js";
 
 import damageRoutes from "./routes/v1/damage.js";
 import hazardRoutes from "./routes/v1/hazard.js";
+import userRoutes from "./routes/v1/user.js";
 import taskRoutes from "./routes/v1/task.js";
 import contactRoutes from "./routes/v1/contact.js";
 import { isContentTypeApplicationJSON } from "./middleware/utils.js";
@@ -18,7 +22,13 @@ const app = express();
  
 // Use the PORT environment variable or 3000
 const PORT = process.env.PORT || 3000;
- 
+
+
+app.use((req, res, next) => {
+    logger.info(`${req.method} ${req.originalUrl}`);
+    next();
+  });
+
 // Use the routes module
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -57,10 +67,11 @@ app.use(
 app.use("/", indexRoutes);
 app.use("/api/v1/damage", damageRoutes);
 app.use("/api/v1/hazard", hazardRoutes);
+app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/task", taskRoutes);
 app.use("/api/v1/contact", contactRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
- 
 // Start the server on port 3000
 app.listen(PORT, () => {
   console.log(
