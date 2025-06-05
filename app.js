@@ -9,6 +9,7 @@ import indexRoutes from "./routes/index.js";
 
 import damageRoutes from "./routes/v1/damage.js";
 import hazardRoutes from "./routes/v1/hazard.js";
+import taskRoutes from "./routes/v1/task.js";
 import contactRoutes from "./routes/v1/contact.js";
 import { isContentTypeApplicationJSON } from "./middleware/utils.js";
 
@@ -56,6 +57,7 @@ app.use(
 app.use("/", indexRoutes);
 app.use("/api/v1/damage", damageRoutes);
 app.use("/api/v1/hazard", hazardRoutes);
+app.use("/api/v1/task", taskRoutes);
 app.use("/api/v1/contact", contactRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  

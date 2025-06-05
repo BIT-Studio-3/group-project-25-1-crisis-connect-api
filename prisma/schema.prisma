@@ -37,6 +37,22 @@ model hazard {
   updatedAt        DateTime     @updatedAt
 }
 
+model task {
+  id            String   @id @default(uuid())
+  title         String
+  description   String
+  requirements  String
+  urgency       String
+  resources     String
+  assignedTo    String
+  supervisor    String
+  status        String
+  createdAt     DateTime @default(now())
+  completedAt   DateTime?
+  department    String
+  updatedAt     DateTime @updatedAt
+  deadline      DateTime?
+}
 model contact {
   id               String @id@default(uuid())
   name             String

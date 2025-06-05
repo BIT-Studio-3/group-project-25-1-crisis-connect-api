@@ -2,10 +2,9 @@
  * @file Manages all  damage methods
  * @author Joanna Marowa
  */
-
 import GenericRepository from "../../repositories/generic.js";
-
 const damageRepository = new GenericRepository('damage'); // Pass the model name ('damage')
+
 
 const recordDamage = async (req, res) => {
   try {
