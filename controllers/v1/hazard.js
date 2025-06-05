@@ -3,11 +3,14 @@
  * @author Mustafa Habibullah
  */
 
-import hazardRepository from "../../repositories/hazard.js";
+import GenericRepository from "../../repositories/generic.js";
+// Instantiate the GenericRepository with the 'hazard' model
+const hazardRepository = new GenericRepository('hazard'); 
 
 const createHazard = async (req, res) => {
   try {
-    await hazardRepository.create({
+    // Create a new hazard
+    const newHazard = await hazardRepository.create({
       streetNumber: req.body.streetNumber,
       streetName: req.body.streetName,
       city: req.body.city,
@@ -16,13 +19,11 @@ const createHazard = async (req, res) => {
       description: req.body.description,
     });
 
-    // Get all hazards from the hazard table
-    const newHazards = await hazardRepository.findAll();
 
     // Send JSON response
     return res.status(201).json({
       message: "Hazard successfully created",
-      data: newHazards,
+      data: newHazard,
     });
   } catch (err) {
     return res.status(500).json({

@@ -2,12 +2,13 @@
  * @file Manages all  damage methods
  * @author Joanna Marowa
  */
+import GenericRepository from "../../repositories/generic.js";
+const damageRepository = new GenericRepository('damage'); // Pass the model name ('damage')
 
-import damageRepository from "../../repositories/damage.js";
 
 const recordDamage = async (req, res) => {
   try {
-    await damageRepository.create({
+    const newDamage = await damageRepository.create({
       streetNumber: req.body.streetNumber,
       streetName: req.body.streetName,
       city: req.body.city,
@@ -16,10 +17,6 @@ const recordDamage = async (req, res) => {
       description: req.body.description,
     });
 
-    // Get all damage from the damage table
-    const newDamage = await damageRepository.findAll();
-
-    //send JSON response
     return res.status(201).json({
       message: "Damage successfully recorded",
       data: newDamage,
@@ -46,7 +43,7 @@ const getDamages = async (req, res) => {
 
     const damage = await damageRepository.findAll(filters, sortBy, sortOrder);
 
-    // Check if there are no institutions
+    // Check if there are no damages
     if (!damage) {
       return res.status(404).json({ message: "No damage record found" });
     }
@@ -65,7 +62,7 @@ const getDamage = async (req, res) => {
   try {
     const damage = await damageRepository.findById(req.params.id);
 console.log()
-    // Check if there is no institution
+    // Check if there is no damage
     if (!damage) {
       return res.status(404).json({
         message: `No damage record with the id: ${req.params.id} found`,
@@ -84,17 +81,17 @@ console.log()
 
 const updateDamage = async (req, res) => {
   try {
-    // Find the institution by id
+    // Find the damage by id
     let damage = await damageRepository.findById(req.params.id);
 
-    // Check if there is no institution
+    // Check if there is no damage
     if (!damage) {
       return res.status(404).json({
-        message: `No institution with the id: ${req.params.id} found`,
+        message: `No damage with the id: ${req.params.id} found`,
       });
     }
 
-    // Update the institution
+    // Update the damage
     damage = await damageRepository.update(req.params.id, {
       // Data to be updated
       type: req.body.type,
