@@ -10,6 +10,7 @@ const taskRepository = new GenericRepository('task');
 const createTask = async (req, res) => {
   try {
     const newTasks = await taskRepository.create({
+        title: req.body.title,
         description : req.body.description,
         requirements : req.body.requirements,
         urgency : req.body.urgency,
@@ -37,7 +38,8 @@ const createTask = async (req, res) => {
 const getTasks = async (req, res) => {
   try {
     const filters = {
-      description: req.query.description || undefined,
+        title: req.body.title || undefined,
+        description: req.query.description || undefined,
         requirements : req.body.requirements|| undefined,
         urgency : req.body.urgency || undefined,
         resources : req.body.resources || undefined,
