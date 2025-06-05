@@ -86,14 +86,14 @@ const updateUser = async (req, res) => {
     }
 
     user = await userRepository.update(req.params.id, {
-      data: {
+
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         role: req.body.role,
         emailAddress: req.body.emailAddress,
         password: req.body.password,
       },
-    });
+    );
 
     return res.status(200).json({
       message: `User record with the id: ${req.params.id} successfully updated`,
