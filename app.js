@@ -1,6 +1,8 @@
 import express from "express";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
  
 // Import the index routes module
 import indexRoutes from "./routes/index.js";
@@ -8,6 +10,7 @@ import indexRoutes from "./routes/index.js";
 import damageRoutes from "./routes/v1/damage.js";
 import hazardRoutes from "./routes/v1/hazard.js";
 import taskRoutes from "./routes/v1/task.js";
+import contactRoutes from "./routes/v1/contact.js";
 import { isContentTypeApplicationJSON } from "./middleware/utils.js";
 
 // Create an Express application
@@ -40,10 +43,22 @@ const swaggerOptions = {
 };
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use(isContentTypeApplicationJSON);
+app.use(
+    helmet({
+      xPoweredBy: true,
+    })
+  );
+app.use(
+  rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+  })
+);
 app.use("/", indexRoutes);
 app.use("/api/v1/damage", damageRoutes);
 app.use("/api/v1/hazard", hazardRoutes);
 app.use("/api/v1/task", taskRoutes);
+app.use("/api/v1/contact", contactRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  
 // Start the server on port 3000

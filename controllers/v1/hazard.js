@@ -2,13 +2,15 @@
  * @file Manages all hazard methods
  * @author Mustafa Habibullah
  */
-import GenericRepository from "../../repositories/generic.js";
 
-const hazardRepository = new GenericRepository('task');
+import GenericRepository from "../../repositories/generic.js";
+// Instantiate the GenericRepository with the 'hazard' model
+const hazardRepository = new GenericRepository('hazard'); 
 
 const createHazard = async (req, res) => {
   try {
-    await hazardRepository.create({
+    // Create a new hazard
+    const newHazard = await hazardRepository.create({
       streetNumber: req.body.streetNumber,
       streetName: req.body.streetName,
       city: req.body.city,
