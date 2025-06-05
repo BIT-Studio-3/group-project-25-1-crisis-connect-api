@@ -33,6 +33,9 @@ import {
  *           format: uuid
  *           example: "8c10f0a2-4d3a-11ec-81d3-0242ac130003"
  *           description: "Unique identifier for the emergency task."
+ *         title: 
+ *           type: string
+ *           example: "Fire Outbreak"
  *         description:
  *           type: string
  *           example: "Fire outbreak at residential building, 3rd floor."
@@ -130,6 +133,11 @@ router.post("/", createTask);
  *     tags:
  *       - Task
  *     parameters:
+ *       - in: query
+ *         name: title
+ *         schema:
+ *           type: string
+ *         description: Filter task records by title
  *       - in: query
  *         name: description
  *         schema:
