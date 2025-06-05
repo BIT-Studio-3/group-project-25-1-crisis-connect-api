@@ -144,10 +144,10 @@ router.post("/", createTask);
  *           type: string
  *         description: Filter task records by description
  *       - in: query
- *         name:  requirements
+ *         name: requirements
  *         schema:
  *           type: string
- *         description: Filter task records by  requirements
+ *         description: Filter task records by requirements
  *       - in: query
  *         name: urgency
  *         schema:
@@ -162,31 +162,33 @@ router.post("/", createTask);
  *         name: assignedTo
  *         schema:
  *           type: string
- *         description: Filter task records by who the task is assigned to  (e.g., Fire Department,Fulton Hogan)
- *        - in: query
+ *         description: Filter task records by who the task is assigned to (e.g., Fire Department, Fulton Hogan)
+ *       - in: query
  *         name: supervisor
  *         schema:
  *           type: string
  *         description: Filter task records by supervisor
  *       - in: query
- *         name:  status
+ *         name: status
  *         schema:
  *           type: string
  *         description: Filter task records by status
- *  - in: query
- *         name:  deadline
+ *       - in: query
+ *         name: deadline
  *         schema:
- *           type: date-time 
- *         description: Filter task records by deadline 
- * - in: query
- *         name:  completedAt:
+ *           type: string
+ *           format: date-time
+ *         description: Filter task records by deadline
+ *       - in: query
+ *         name: completedAt
  *         schema:
- *           type: date-time 
+ *           type: string
+ *           format: date-time
  *         description: Filter task records by completedAt
- * - in: query
- *         name:  department
+ *       - in: query
+ *         name: department
  *         schema:
- *           type: date-time 
+ *           type: string
  *         description: Filter task records by department
  *       - in: query
  *         name: sortBy
