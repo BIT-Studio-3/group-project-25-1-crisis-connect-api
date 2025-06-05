@@ -4,7 +4,6 @@
  */
 
 import GenericRepository from "../../repositories/generic.js";
-
 // Instantiate the GenericRepository with the 'hazard' model
 const hazardRepository = new GenericRepository('hazard'); 
 
