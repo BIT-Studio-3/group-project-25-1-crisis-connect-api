@@ -194,7 +194,7 @@ router.post("/", createTask);
  *         name: sortBy
  *         schema:
  *           type: string
- *           enum: [id, streetNumber, streetName, urgency, resources, type]
+ *           enum: [id, title, description, requirements, urgency, resources, assignedTo, supervisor, status, deadline, completedAt, department ]
  *         description: Field to sort the task records by (default is 'id')
  *       - in: query
  *         name: sortOrder
