@@ -56,7 +56,6 @@ const router = express.Router();
  *           type: string
  *           format: date-time
  *           example: "2024-07-14T12:34:56Z"
- *
  *     DamageUpdate:
  *       type: object
  *       properties:
@@ -79,7 +78,6 @@ const router = express.Router();
  *           type: string
  *           example: "Severe fire damage"
  */
-
 /**
  * @swagger
  * /api/v1/damage:

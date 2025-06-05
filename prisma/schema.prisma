@@ -12,7 +12,7 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-enum Role{
+enum Role {
   FENZ
   civilDefence
   Police

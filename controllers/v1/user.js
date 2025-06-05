@@ -11,6 +11,7 @@ const createUser = async (req, res) => {
       lastName: req.body.lastName,
       role: req.body.role,
       emailAddress: req.body.emailAddress,
+      password: req.body.password,
     });
 
     // Send JSON response
@@ -32,6 +33,7 @@ const getUsers = async (req, res) => {
       lastName: req.body.lastName || undefined,
       role: req.body.role || undefined,
       emailAddress: req.body.emailAddress || undefined,
+      password: req.body.password || undefined,
     }
     const sortBy = req.query.sortBy || "id";
     const sortOrder = req.query.sortOrder === "desc" ? "desc" : "asc";
@@ -89,6 +91,7 @@ const updateUser = async (req, res) => {
         lastName: req.body.lastName,
         role: req.body.role,
         emailAddress: req.body.emailAddress,
+        password: req.body.password,
       },
     });
 
